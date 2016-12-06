@@ -78,18 +78,17 @@ export default class TabNavigationLayout extends Component {
                         renderIcon={isSelected => this._renderIcon('md-notifications', isSelected)}>
                         <StackNavigation
                             id="program"
-                            initialRoute={Router.getRoute('now')}
-                            />
+                            initialRoute={Router.getRoute('programAndroid')} />
                     </DrawerNavigationItem>
 
                     <DrawerNavigationItem
                         id="profile"
                         selectedStyle={styles.selectedItemStyle}
-                        renderTitle={isSelected => this._renderTitle('Contact', isSelected)}
+                        renderTitle={isSelected => this._renderTitle('Profile', isSelected)}
                         renderIcon={isSelected => this._renderIcon('md-contact', isSelected)}>
                         <StackNavigation
                             id="profile"
-                            initialRoute={Router.getRoute('now')}
+                            initialRoute={Router.getRoute('profile')}
                             />
                     </DrawerNavigationItem>
 

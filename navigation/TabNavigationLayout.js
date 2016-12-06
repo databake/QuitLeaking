@@ -66,7 +66,7 @@ export default class TabNavigationLayout extends Component {
                         renderIcon={isSelected => this._renderIcon('Program', 'ios-notifications-outline', 'ios-notifications', isSelected)}>
                         <StackNavigation
                             id="program"
-                            initialRoute={Router.getRoute('now')}
+                            initialRoute={Router.getRoute('program')}
                             />
                     </TabItem>
 
@@ -75,7 +75,7 @@ export default class TabNavigationLayout extends Component {
                         renderIcon={isSelected => this._renderIcon('Profile', 'ios-contact-outline', 'ios-contact', isSelected)}>
                         <StackNavigation
                             id="profile"
-                            initialRoute={Router.getRoute('now')}
+                            initialRoute={Router.getRoute('profile')}
                             />
                     </TabItem>
 

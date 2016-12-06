@@ -107,7 +107,7 @@ Insights.propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#f6f6f6',
     },
     header: {
         flex: 1,
