@@ -20,7 +20,7 @@ import Colors from '../constants/Colors';
 const DEFAULT_WORK_DURATION = 0.16667;
 const DEFAULT_BREAK_DURATION = 0.16667;
 const ONE_SECOND = 1000;
-const SQUEEZE = '🍅';
+const SQUEEZE = '❤️';
 
 class SqueezeNow extends Component {
 
