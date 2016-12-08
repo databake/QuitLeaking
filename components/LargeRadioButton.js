@@ -8,15 +8,21 @@ import {
 class LargeRadioButton extends Component {
 
     render() {
-        return(
-            <View style={this.props.complete ? [styles.complete, {backgroundColor: this.props.color}] : [styles.inComplete, {borderColor: this.props.color}]} />
-        )
+        return (
+            <View 
+                style={
+                    this.props.complete ? 
+                    [styles.complete, { backgroundColor: this.props.color }] : 
+                    [styles.inComplete, { borderColor: this.props.color }]
+                } 
+            />
+        );
     }
 }
 
 LargeRadioButton.propTypes = {
     color: PropTypes.string.isRequired,
-}
+};
 
 const styles = StyleSheet.create({
     complete: {
@@ -36,6 +42,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginRight: 10,
     },
-})
+});
 
 export default LargeRadioButton;

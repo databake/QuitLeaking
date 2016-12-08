@@ -11,10 +11,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 class LeakListRow extends Component {
 
-    constructor(props, context) {
-        super(props, context);
-    }
-
     onRowPress() {
          
     }
@@ -22,7 +18,10 @@ class LeakListRow extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress={this.onRowPress.bind(this)} style={styles.innerContainer}>
+                <TouchableOpacity 
+                    onPress={this.onRowPress.bind(this)} 
+                    style={styles.innerContainer}
+                >
                     <View style={styles.row}>
                         <View style={styles.left}>
                             <Text style={styles.title}>{this.props.title}</Text>
@@ -32,13 +31,18 @@ class LeakListRow extends Component {
                             <Text style={styles.volume}>{this.props.volume}</Text>
                             <Text style={styles.measure}>{this.props.measure}</Text>
                         </View>
-                        <View style={{width:20, justifyContent: 'center', alignItems: 'flex-end'}}>
-                            <Icon style={styles.chevron} color='#C8C7CC' name='angle-right' size={22} />
+                        <View style={styles.iconContainer}>
+                            <Icon 
+                                style={styles.chevron} 
+                                color='#C8C7CC' 
+                                name='angle-right' 
+                                size={22} 
+                            />
                         </View>
                     </View>
                 </TouchableOpacity>
             </View>
-        )
+        );
     }
 }
 
@@ -91,7 +95,12 @@ const styles = StyleSheet.create({
     measure: {
         fontSize: 12,
         color: '#BDC3C7',
-    }
-})
+    },
+    iconContainer: {
+        width: 20, 
+        justifyContent: 'center', 
+        alignItems: 'flex-end',
+    },
+});
 
-export default LeakListRow
+export default LeakListRow;

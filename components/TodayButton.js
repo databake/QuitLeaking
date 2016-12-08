@@ -1,12 +1,9 @@
 import React, { Component, PropTypes } from 'react';
     import {
     StyleSheet,
-    Text,
     View,
     Button,
 } from 'react-native';
-
-import Colors from '../constants/Colors';
 
 class TodayButton extends Component {
 
@@ -21,16 +18,17 @@ class TodayButton extends Component {
    }
 
     render() {
-        return(
+        return (
             <View style={styles.container}>
-                <Button color={this.props.tintColor} 
+                <Button
+                    color={this.props.tintColor} 
                     title={this.props.title} 
-                    onPress={this.props.onButtonPress} />
+                    onPress={this.props.onButtonPress}
+                />
             </View>
-        )
+        );
     }
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -38,6 +36,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginRight: 10,
     },
-})
+});
 
-export default TodayButton
+export default TodayButton;

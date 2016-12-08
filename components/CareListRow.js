@@ -7,10 +7,10 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
-import LargeRadioButton from './LargeRadioButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Router from '../navigation/Router';
 import { withNavigation } from '@exponent/ex-navigation';
+import LargeRadioButton from './LargeRadioButton';
+import Router from '../navigation/Router';
 
 @withNavigation
 export default class CareListRow extends Component {
@@ -24,36 +24,51 @@ export default class CareListRow extends Component {
     render() {
         return (
             <View style={[styles.container, { height: 100 }]}>
-                <TouchableOpacity onPress={this.onRowPress.bind(this)} style={styles.innerContainer}>
+                <TouchableOpacity 
+                    onPress={this.onRowPress.bind(this)} 
+                    style={styles.innerContainer}
+                >
                     <View style={styles.innerContainer}>
                         <View style={styles.title}>
                             <Text
-                                style={[styles.text, { fontWeight: 'bold' }]}>{this.props.title}
+                                style={[styles.text, { fontWeight: 'bold' }]}
+                            >{this.props.title}
                                 <Text style={styles.text}> {this.props.subTitle}</Text>
                             </Text>
                         </View>
                         <View style={styles.circles}>
-                            <LargeRadioButton complete={this.props.slowComplete} color={this.props.color} />
-                            <LargeRadioButton complete={this.props.quickComplete} color={this.props.color} />
-                            <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center', marginBottom: 16 }}>
-                                <Icon style={styles.chevron} color='#C8C7CC' name='angle-right' size={22} />
+                            <LargeRadioButton 
+                                complete={this.props.slowComplete} 
+                                color={this.props.color} 
+                            />
+                            <LargeRadioButton 
+                                complete={this.props.quickComplete} 
+                                color={this.props.color} 
+                            />
+                            <View style={styles.iconContainer}>
+                                <Icon 
+                                    style={styles.chevron} 
+                                    color='#C8C7CC' 
+                                    name='angle-right' 
+                                    size={22} 
+                                />
                             </View>
                         </View>
                     </View>
                 </TouchableOpacity>
             </View>
-        )
+        );
     }
 }
 
 CareListRow.propTypes = {
     title: PropTypes.string.isRequired,
     subTitle: PropTypes.string.isRequired,
-}
+};
 
 CareListRow.defaultProps = {
     color: 'red',
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -80,4 +95,10 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '200',
     },
-})
+    iconContainer: {
+        flex: 1, 
+        alignItems: 'flex-end', 
+        justifyContent: 'center', 
+        marginBottom: 16,
+    },
+});

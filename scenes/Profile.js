@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
     import {
     StyleSheet,
     Text,
@@ -17,23 +17,14 @@ class Profile extends Component {
         },
     };
 
-    constructor(props, context) {
-        super(props, context);
-    }
-
     render() {
-        return(
+        return (
             <View style={styles.container}>
                 <Text>I am Profile</Text>
             </View>
-        )
+        );
     }
 }
-
-Profile.propTypes = {
-    // actions: PropTypes.object.isRequired,
-    // posts: PropTypes.arrayOf(PropTypes.object)
-};
 
 const styles = StyleSheet.create({
     container: {
@@ -41,6 +32,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-})
+});
 
-export default Profile
+export default Profile;

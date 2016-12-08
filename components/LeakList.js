@@ -1,7 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
     import {
     StyleSheet,
-    Text,
     View,
 } from 'react-native';
 
@@ -9,32 +8,25 @@ import LeakListRow from '../components/LeakListRow';
 
 class LeakList extends Component {
 
-    constructor(props, context) {
-        super(props, context);
-    }
-
     render() {
-        return(
+        return (
             <View style={styles.container}>
                 <LeakListRow 
                     title='Leakage' 
                     subTitle='The volume of urine in used pads'
                     volume={1000}
-                    measure='ml' />
+                    measure='ml' 
+                />
                 <LeakListRow 
                     title='Fluid intake' 
                     subTitle='The volume of fluid intake over 24 hours'
                     volume={2000}
-                    measure='ml' />
+                    measure='ml' 
+                />
             </View>
-        )
+        );
     }
 }
-
-LeakList.propTypes = {
-    // actions: PropTypes.object.isRequired,
-    // posts: PropTypes.arrayOf(PropTypes.object)
-};
 
 const styles = StyleSheet.create({
     container: {
@@ -43,6 +35,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
     },
-})
+});
 
-export default LeakList
+export default LeakList;

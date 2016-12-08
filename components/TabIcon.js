@@ -11,10 +11,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 class TabIcon extends Component {
 
-    constructor(props, context) {
-        super(props, context);
-    }
-
     static propTypes = {
         selected: PropTypes.bool,
         title: PropTypes.string,
@@ -26,25 +22,24 @@ class TabIcon extends Component {
     };
 
     render() {
-        let color = this.props.selected ? 'red' : 'gray'
-        var iconName
+        const color = this.props.selected ? 'red' : 'gray';
+        let iconName;
         if (Platform.OS === 'ios') {
-            iconName = this.props.selected ? "ios-" + this.props.iconName : "ios-" + this.props.iconName + "-outline"
+            iconName = this.props.selected ? 
+            `ios-${this.props.iconName}` : 
+            `ios-${this.props.iconName}-outline`;
         } else {
-            iconName = 'md-' + this.props.iconName
+            iconName = `md-${this.props.iconName}`;
         }
          
-        
         return (
             <View style={styles.container}>
                 <Icon color={color} name={iconName} size={28} />
-                <Text style={[styles.tabBarTitle, { color: color }]}>{this.props.title}</Text>
+                <Text style={[styles.tabBarTitle, { color }]}>{this.props.title}</Text>
             </View>
-        )
+        );
     }
 }
-
-
 
 const styles = StyleSheet.create({
     container: {
@@ -54,8 +49,8 @@ const styles = StyleSheet.create({
     },
     tabBarTitle: {
         fontSize: 12,
-        fontWeight: "200",
+        fontWeight: '200',
     }
-})
+});
 
-export default TabIcon
+export default TabIcon;

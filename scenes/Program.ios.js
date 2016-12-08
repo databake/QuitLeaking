@@ -1,13 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
     StyleSheet,
-    Text,
     View,
     Alert,
 } from 'react-native';
 
-import Colors from '../constants/Colors';
 import SettingsList from 'react-native-settings-list';
+import Colors from '../constants/Colors';
 
 class Program extends Component {
 
@@ -15,7 +14,7 @@ class Program extends Component {
         navigationBar: {
             title: 'Settings',
             tintColor: Colors.tintColor,
-            titleStyle: {color: 'black'},
+            titleStyle: { color: 'black' },
         },
     };
 
@@ -25,79 +24,83 @@ class Program extends Component {
         this.state = { switchValue: true };
     }
 
+    onValueChange(value) {
+        this.setState({ switchValue: value });
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <SettingsList
                     borderColor='rgba(0, 0, 0, 0.1)'
-                    defaultItemSize={50}>
+                    defaultItemSize={50}
+                >
                     <SettingsList.Header 
                         headerText='Schedule' 
-                        headerStyle={styles.headerStyle} />
+                        headerStyle={styles.headerStyle}
+                    />
                     <SettingsList.Item 
                         titleInfo='4' 
-                        hasNavArrow={true} 
+                        hasNavArrow 
                         title='Exercises per day'
-                        onPress={() => Alert.alert('Exercises per day')}/>
+                        onPress={() => Alert.alert('Exercises per day')} 
+                    />
 
                     <SettingsList.Item
                         hasNavArrow={false}
                         switchState={this.state.switchValue}
                         switchOnValueChange={this.onValueChange}
-                        hasSwitch={true}
-                        title='Reminders' />
+                        hasSwitch
+                        title='Reminders'
+                    />
                     <SettingsList.Item 
                         title='Reminder Settings'
-                        onPress={() => Alert.alert('Reminder settings')}/>
+                        onPress={() => Alert.alert('Reminder settings')} 
+                    />
 
                     <SettingsList.Header 
                         headerText='Slow Exercises' 
-                        headerStyle={styles.headerStyle} />
+                        headerStyle={styles.headerStyle}
+                    />
 
                     <SettingsList.Item 
                         titleInfo='10' 
-                        hasNavArrow={true} 
+                        hasNavArrow 
                         title='Repetitions'
-                        onPress={() => Alert.alert('Slow Repetitions')}/>
+                        onPress={() => Alert.alert('Slow Repetitions')} 
+                    />
 
                     <SettingsList.Item 
                         titleInfo='10 seconds' 
-                        hasNavArrow={true} 
+                        hasNavArrow 
                         title='Squeeze time'
-                        onPress={() => Alert.alert('Slow Squeeze Time')}/>
+                        onPress={() => Alert.alert('Slow Squeeze Time')} 
+                    />
 
                     <SettingsList.Item 
                         titleInfo='10 seconds' 
-                        hasNavArrow={true} 
+                        hasNavArrow 
                         title='Relax time'
-                        onPress={() => Alert.alert('Slow Squeeze Relax Time')}/>
+                        onPress={() => Alert.alert('Slow Squeeze Relax Time')} 
+                    />
 
                     <SettingsList.Header 
                         headerText='Quick Exercises' 
-                        headerStyle={styles.headerStyle} />
+                        headerStyle={styles.headerStyle}
+                    />
 
                     <SettingsList.Item 
                         titleInfo='10' 
-                        hasNavArrow={true} 
+                        hasNavArrow 
                         title='Repetitions'
-                        onPress={() => Alert.alert('Fast Repetitions')}/>
+                        onPress={() => Alert.alert('Fast Repetitions')} 
+                    />
 
                 </SettingsList>
             </View>
-        )
+        );
     }
-
-    onValueChange(value) {
-        this.setState({switchValue: value});
-    };
-
 }
-
-
-Program.propTypes = {
-    // actions: PropTypes.object.isRequired,
-    // posts: PropTypes.arrayOf(PropTypes.object)
-};
 
 const styles = StyleSheet.create({
     container: {
@@ -113,6 +116,6 @@ const styles = StyleSheet.create({
         marginTop: 15,
         paddingLeft: 8,
     }
-})
+});
 
-export default Program
+export default Program;

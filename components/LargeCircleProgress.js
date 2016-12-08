@@ -5,7 +5,7 @@ import {
   View,
 } from 'react-native';
 
-import * as Progress from 'react-native-progress'
+import * as Progress from 'react-native-progress';
 
 export default class LargeCircleProgress extends Component {
 
@@ -32,14 +32,15 @@ export default class LargeCircleProgress extends Component {
                         progress={this.props.progress} 
                         thickness={10} 
                         color={this.props.color} 
-                        style={styles.progress} />
+                        style={styles.progress} 
+                    />
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.boldText}>{this.props.title}</Text>
                     <Text style={styles.subTitle}>{this.props.subTitle}</Text>
                 </View>
             </View>
-        )
+        );
     }
 }
 
@@ -79,4 +80,4 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '200',
     }
-})
+});

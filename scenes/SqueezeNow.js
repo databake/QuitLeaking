@@ -1,12 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
     View,
     Animated,
-    Dimensions,
-    Image,
-    Alert,
     Button,
 } from 'react-native';
 
@@ -47,47 +44,98 @@ class SqueezeNow extends Component {
     };
 
     componentDidMount() {
-        this._fetchCompletedCount();
+        this.fetchCompletedCount();
     }
 
-    render() {
-        let { currentScreen } = this.state;
-        let backgroundColor = this.state.backgroundColor.interpolate({
-            inputRange: [0, 1, 2],
-            outputRange: ['#999999', '#669999', '#003333'],
-        });
-
-        return (
-            <Animated.View style={[styles.container, { backgroundColor }]}>
-                <View style={styles.contentContainer}>
-                    {this._renderTimeRemaining()}
-                </View>
-                {this._renderButtons()}
-                <View style={styles.completedContainer}>
-                    <Text style={styles.completedText}>
-                        {this._renderTodaysCount()}
-                    </Text>
-                </View>
-            </Animated.View>
-        )
-    }
-
-    async _squeezeDidComplete() {
+    async squeezeDidComplete() {
         await DataStore.incrementHarvest(todayAtMidnight());
-        this._fetchCompletedCount();
+        this.fetchCompletedCount();
     }
 
-    async _fetchCompletedCount() {
-        let completedToday = await DataStore.harvestCountForDate(todayAtMidnight());
+    async fetchCompletedCount() {
+        const completedToday = await DataStore.harvestCountForDate(todayAtMidnight());
         this.setState({ completedToday });
     }
 
-    _renderTodaysCount() {
-        let { completedToday } = this.state;
+    pauseTimer() {
+        this.setState({ countdownState: 'paused' }, () => {
+            Animated.spring(this.state.backgroundColor, { toValue: 0.5 }).start();
+
+            clearInterval(this.timer);
+            this.timer = null;
+        });
+    }
+
+    stopTimer() {
+        // const { workDuration } = this.props;
+
+        this.setState({ countdownState: 'idle', lastTick: null, endTime: null }, () => {
+            Animated.spring(this.state.backgroundColor, { toValue: 0 }).start();
+            clearInterval(this.timer);
+            this.timer = null;
+        });
+    }
+
+    startTimer() {
+        const { workDuration } = this.props;
+        clearInterval(this.timer);
+
+        const currentTime = (new Date()).getTime();
+        let endTime;
+
+        if (this.state.countdownState === 'paused' && this.state.lastTick && this.state.endTime) {
+            const timeIdle = currentTime - this.state.lastTick;
+            endTime = this.state.endTime + timeIdle;
+        } else {
+            endTime = ((currentTime + workDuration) * 60) * 1000;
+        }
+
+        this.setState({ countdownState: 'active', endTime, lastTick: currentTime }, async () => {
+            Animated.spring(this.state.backgroundColor, { toValue: 1 }).start();
+
+            // Start ticker
+            this.timer = setInterval(() => {
+                const lastTick = (new Date()).getTime();
+                if (lastTick > endTime) {
+                    this.squeezeDidComplete();
+                    this.startBreak();
+                } else {
+                    this.setState({ lastTick });
+                }
+            }, ONE_SECOND);
+        });
+    }
+
+    startBreak() {
+        const { breakDuration } = this.props;
+        clearInterval(this.timer);
+
+
+        const currentTime = (new Date()).getTime();
+        const endTime = ((currentTime + breakDuration) * 60) * 1000;
+
+        this.setState({ countdownState: 'break', endTime, lastTick: currentTime }, async () => {
+            Animated.spring(this.state.backgroundColor, { toValue: 2 }).start();
+
+            // Start ticker
+            this.timer = setInterval(() => {
+                const lastTick = (new Date()).getTime();
+                if (lastTick > endTime) {
+                    this.startTimer();
+                } else {
+                    this.setState({ lastTick });
+                }
+            }, ONE_SECOND);
+        });
+    }
+
+
+    renderTodaysCount() {
+        const { completedToday } = this.state;
         return range(completedToday).map((_, i) => <Text key={i}>{SQUEEZE}</Text>);
     }
 
-    _renderTimeRemaining() {
+    renderTimeRemaining() {
         let { endTime, lastTick } = this.state;
         let minutesRemaining;
         let secondsRemaining;
@@ -109,108 +157,82 @@ class SqueezeNow extends Component {
         );
     }
 
-    _renderButtons() {
-        let { countdownState } = this.state;
+    renderButtons() {
+        const { countdownState } = this.state;
 
         if (countdownState === 'idle') {
             return (
                 <View style={styles.buttonContainer}>
-                    <Button onPress={() => { this._startTimer() }} title="Start" color={Colors.tintColor} />
+                    <Button 
+                        onPress={() => { this.startTimer(); }} 
+                        title="Start" 
+                        color={Colors.tintColor} 
+                    />
                 </View>
             );
         } else if (countdownState === 'active') {
             return (
                 <View style={styles.buttonContainer}>
-                    <Button onPress={() => { this._pauseTimer() } } title="Pause" color={Colors.tintColor} />
-                    <Button onPress={() => { this._stopTimer(true) } } title="Stop" color={Colors.tintColor} />
+                    <Button 
+                        onPress={() => { this.pauseTimer(); }} 
+                        title="Pause" 
+                        color={Colors.tintColor} 
+                    />
+                    <Button 
+                        onPress={() => { this.stopTimer(true); }} 
+                        title="Stop" 
+                        color={Colors.tintColor}
+                    />
                 </View>
             );
         } else if (countdownState === 'paused') {
             return (
                 <View style={styles.buttonContainer}>
-                    <Button onPress={() => { this._startTimer() } } title="Start" color={Colors.tintColor} />
-                    <Button onPress={() => { this._stopTimer(true) } } title="Stop" color={Colors.tintColor} />
+                    <Button 
+                        onPress={() => { this.startTimer(); }} 
+                        title="Start" 
+                        color={Colors.tintColor} 
+                    />
+                    <Button 
+                        onPress={() => { this.stopTimer(true); }} 
+                        title="Stop" 
+                        color={Colors.tintColor} 
+                    />
                 </View>
             );
         } else if (countdownState === 'break') {
             return (
                 <View style={styles.buttonContainer}>
-                    <Button onPress={() => { this._startTimer() } } title="Skip break" color={Colors.tintColor} />
+                    <Button 
+                        onPress={() => { this.startTimer(); }} 
+                        title="Skip break" 
+                        color={Colors.tintColor} 
+                    />
                 </View>
             );
         }
     }
 
-    _pauseTimer() {
-        this.setState({ countdownState: 'paused' }, () => {
-            Animated.spring(this.state.backgroundColor, { toValue: 0.5 }).start();
-
-            clearInterval(this._timer);
-            this._timer = null;
+    render() {
+        // const { currentScreen } = this.state;
+        const backgroundColor = this.state.backgroundColor.interpolate({
+            inputRange: [0, 1, 2],
+            outputRange: ['#999999', '#669999', '#003333'],
         });
-    }
 
-    _stopTimer(cancelNotification = false) {
-        let { workDuration } = this.props;
-
-        this.setState({ countdownState: 'idle', lastTick: null, endTime: null }, () => {
-            Animated.spring(this.state.backgroundColor, { toValue: 0 }).start();
-            clearInterval(this._timer);
-            this._timer = null;
-        });
-    }
-
-    _startTimer() {
-        let { workDuration } = this.props;
-        clearInterval(this._timer);
-
-        let currentTime = (new Date()).getTime();
-        let endTime;
-
-        if (this.state.countdownState === 'paused' && this.state.lastTick && this.state.endTime) {
-            let timeIdle = currentTime - this.state.lastTick;
-            endTime = this.state.endTime + timeIdle;
-        } else {
-            endTime = currentTime + workDuration * 60 * 1000;
-        }
-
-        this.setState({ countdownState: 'active', endTime, lastTick: currentTime }, async () => {
-            Animated.spring(this.state.backgroundColor, { toValue: 1 }).start();
-
-            // Start ticker
-            this._timer = setInterval(() => {
-                let lastTick = (new Date()).getTime();
-                if (lastTick > endTime) {
-                    this._squeezeDidComplete();
-                    this._startBreak();
-                } else {
-                    this.setState({ lastTick });
-                }
-            }, ONE_SECOND);
-        });
-    }
-
-    _startBreak() {
-        let { breakDuration } = this.props;
-        clearInterval(this._timer);
-
-
-        let currentTime = (new Date()).getTime();
-        let endTime = currentTime + breakDuration * 60 * 1000;
-
-        this.setState({ countdownState: 'break', endTime, lastTick: currentTime }, async () => {
-            Animated.spring(this.state.backgroundColor, { toValue: 2 }).start();
-
-            // Start ticker
-            this._timer = setInterval(() => {
-                let lastTick = (new Date()).getTime();
-                if (lastTick > endTime) {
-                    this._startTimer();
-                } else {
-                    this.setState({ lastTick });
-                }
-            }, ONE_SECOND);
-        });
+        return (
+            <Animated.View style={[styles.container, { backgroundColor }]}>
+                <View style={styles.contentContainer}>
+                    {this.renderTimeRemaining()}
+                </View>
+                {this.renderButtons()}
+                <View style={styles.completedContainer}>
+                    <Text style={styles.completedText}>
+                        {this.renderTodaysCount()}
+                    </Text>
+                </View>
+            </Animated.View>
+        );
     }
 }
 
@@ -244,6 +266,6 @@ const styles = StyleSheet.create({
     completedText: {
         fontSize: 30,
     },
-})
+});
 
-export default SqueezeNow
+export default SqueezeNow;

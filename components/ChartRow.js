@@ -7,10 +7,6 @@ import {
 
 class ChartRow extends Component {
 
-    constructor(props, context) {
-        super(props, context);
-    }
-
     static propTyps = {
         day: PropTypes.string,
         date: PropTypes.string,
@@ -29,16 +25,32 @@ class ChartRow extends Component {
                 </View>
                 <View style={styles.bar}>
                     <View style={{ flex: 1, flexDirection: 'row' }} >
-                        <View style={{ flex: this.props.topValue, backgroundColor: '#3ea2ee', margin: 1 }} />
-                        <Text style={[styles.topBarText, {flex: 12 - this.props.topValue}]}>{this.props.topTitle}</Text>
+                        <View 
+                            style={{ 
+                                flex: this.props.topValue, 
+                                backgroundColor: '#3ea2ee', 
+                                margin: 1 
+                            }} 
+                        />
+                        <Text style={[styles.topBarText, { flex: 12 - this.props.topValue }]}>
+                            {this.props.topTitle}
+                        </Text>
                     </View>
                     <View style={{ flex: 1, flexDirection: 'row' }} >
-                        <View style={{ flex: this.props.bottomValue, backgroundColor: '#9dcef6', margin: 1 }} />
-                        <Text style={[styles.bottomBarText, {flex: 12 - this.props.bottomValue}]}>{this.props.bottomTitle}</Text>
+                        <View 
+                            style={{ 
+                                flex: this.props.bottomValue, 
+                                backgroundColor: '#9dcef6', 
+                                margin: 1 
+                            }} 
+                        />
+                        <Text style={[styles.bottomBarText, { flex: 12 - this.props.bottomValue }]}>
+                            {this.props.bottomTitle}
+                        </Text>
                     </View>
                 </View>
             </View>
-        )
+        );
     }
 }
 
@@ -70,6 +82,6 @@ const styles = StyleSheet.create({
         color: '#9dcef6',
         marginLeft: 5,        
     },
-})
+});
 
-export default ChartRow
+export default ChartRow;

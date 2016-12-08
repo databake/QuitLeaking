@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   ScrollView,
-  Button,
   Alert,
 } from 'react-native';
 
@@ -24,15 +22,18 @@ export default class QuitLeaking extends Component {
     navigationBar: {
       title: 'Squeeze',
       tintColor: Colors.tintColor,
-      titleStyle: {color: 'black'},
-      renderRight: (route, props) => <TodayButton tintColor={Colors.tintColor} onButtonPress={onButtonPress}/>,
+      titleStyle: { color: 'black' },
+      renderRight: () => <TodayButton 
+          tintColor={Colors.tintColor} 
+          onButtonPress={onButtonPress}
+      />,
     },
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView  >
+        <ScrollView >
           <View style={{ flex: 1 }}>
             <View style={styles.horizontalScrollView}>
               <WeekSlider color={Colors.brandColor} />
@@ -42,7 +43,8 @@ export default class QuitLeaking extends Component {
                 title='Squeeze Completion'
                 subTitle='3rd December, 2016'
                 progress={0.33}
-                color={Colors.brandColor} />
+                color={Colors.brandColor} 
+              />
             </View >
             <View style={styles.careList}>
               <CareList />

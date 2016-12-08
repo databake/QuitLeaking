@@ -1,7 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
     StyleSheet,
-    Text,
     View,
     ScrollView,
     Alert,
@@ -23,15 +22,18 @@ class Leakage extends Component {
         navigationBar: {
             title: 'Leakage',
             tintColor: Colors.leakageTintColor,
-            titleStyle: {color: 'black'},
-            renderRight: (route, props) => <TodayButton tintColor={Colors.leakageTintColor} onButtonPress={onButtonPress}/>,
+            titleStyle: { color: 'black' },
+            renderRight: () => <TodayButton 
+                tintColor={Colors.leakageTintColor} 
+                onButtonPress={onButtonPress} 
+            />,
         },
     };
 
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView  >
+                <ScrollView>
                     <View style={{ flex: 1 }}>
                         <View style={styles.horizontalScrollView}>
                             <WeekSlider color={Colors.leakageTintColor} />
@@ -41,7 +43,8 @@ class Leakage extends Component {
                                 title='Fluid Leakage'
                                 subTitle='3rd December, 2016'
                                 progress={0.5}
-                                color={Colors.leakageTintColor} />
+                                color={Colors.leakageTintColor} 
+                            />
                         </View >
                         <View style={styles.careList}>
                             <LeakList />
@@ -49,7 +52,7 @@ class Leakage extends Component {
                     </View>
                 </ScrollView>
             </View>
-        )
+        );
     }
 }
 
@@ -72,6 +75,6 @@ const styles = StyleSheet.create({
     horizontalScrollView: {
         height: 70
     }
-})
+});
 
-export default Leakage
+export default Leakage;

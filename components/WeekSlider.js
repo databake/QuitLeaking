@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   ScrollView,
 } from 'react-native';
@@ -20,18 +19,23 @@ export default class WeekSlider extends Component {
 
     render() {
         return (
-            <ScrollView horizontal={true} contentContainerStyle={{flex:1}}>
+            <ScrollView horizontal contentContainerStyle={{ flex: 1 }}>
                 <View style={styles.container}>
                     <SmallCircleProgress progress={1} day="S" color={this.props.color} />
                     <SmallCircleProgress progress={0.5} day="M" color={this.props.color} />
                     <SmallCircleProgress progress={0.5} day="T" color={this.props.color} />
                     <SmallCircleProgress progress={1} day="W" color={this.props.color} />
                     <SmallCircleProgress progress={1} day="T" color={this.props.color} />
-                    <SmallCircleProgress progress={0.25} day="F" color={this.props.color} highLighted />
-                    <SmallCircleProgress progress={0.5} day="S" color={this.props.color}/>
+                    <SmallCircleProgress 
+                        progress={0.25} 
+                        day="F" 
+                        color={this.props.color} 
+                        highLighted 
+                    />
+                    <SmallCircleProgress progress={0.5} day="S" color={this.props.color} />
                 </View>
             </ScrollView>
-        )
+        );
     }
 
 }
@@ -45,4 +49,4 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingTop: 5,
     },
-})
+});

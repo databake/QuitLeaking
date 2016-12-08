@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import CareListRow from '../components/CareListRow';
@@ -16,22 +15,26 @@ export default class CareList extends Component {
                     subTitle='(10 slow, 10 quick squeezes)' 
                     color='goldenrod' 
                     slowComplete
-                    quickComplete />
+                    quickComplete
+                />
                 <CareListRow 
                     title='2 of 4' 
                     subTitle='(10 slow, 10 quick squeezes)' 
                     color='mediumpurple'
-                    slowComplete />
+                    slowComplete
+                />
                 <CareListRow 
                     title='3 of 4' 
                     subTitle='(10 slow, 10 quick squeezes)' 
-                    color='mediumseagreen'/>
+                    color='mediumseagreen' 
+                />
                 <CareListRow 
                     title='4 of 4' 
                     subTitle='(10 slow, 10 quick squeezes)' 
-                    color='steelblue'/>
+                    color='steelblue' 
+                />
             </View>
-        )
+        );
     }
 }
 
@@ -42,4 +45,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
     },
-})
+});

@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   PixelRatio,
 } from 'react-native';
@@ -29,9 +28,10 @@ export default class TodaySummary extends Component {
                     title={this.props.title} 
                     subTitle={this.props.subTitle}
                     progress={this.props.progress} 
-                    color={this.props.color}/>
+                    color={this.props.color}
+                />
             </View>
-        )
+        );
     }
 
 }
@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
         color: 'black',
         fontWeight: 'bold',
     },
-})
+});

@@ -5,17 +5,16 @@ import {
     View,
 } from 'react-native';
 
-import * as Progress from 'react-native-progress'
+import * as Progress from 'react-native-progress';
 
 class SmallCircleProgress extends Component {
 
     render() {
-
-        var dayStyle
+        let dayStyle;
         if (this.props.highLighted) {
-            dayStyle =  [styles.highLighted, {backgroundColor: this.props.color}] 
+            dayStyle = [styles.highLighted, { backgroundColor: this.props.color }]; 
         } else {
-            dayStyle =  styles.text 
+            dayStyle = styles.text; 
         }
 
         return (
@@ -26,20 +25,21 @@ class SmallCircleProgress extends Component {
                     size={32}
                     unfilledColor='#ECF0F1'
                     progress={this.props.progress}
-                    style={styles.progress} color={this.props.color} />
+                    style={styles.progress} color={this.props.color}
+                />
             </View>
-        )
+        );
     }
 }
 
 SmallCircleProgress.propTypes = {
     progress: PropTypes.number.isRequired,
-}
+};
 
 SmallCircleProgress.defaultProps = {
     color: 'red',
     borderColor: '#FFA07A',
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -65,6 +65,6 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         fontWeight: 'bold',
     }
-})
+});
 
 export default SmallCircleProgress;

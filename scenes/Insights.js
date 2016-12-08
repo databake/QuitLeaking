@@ -1,12 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
     View,
     PixelRatio,
-    ScrollView,
-    Button,
-    Alert,
+    ScrollView
 } from 'react-native';
 
 import ChartRow from '../components/ChartRow';
@@ -14,16 +12,11 @@ import Colors from '../constants/Colors';
 
 class Insights extends Component {
 
-    constructor(props, context) {
-        super(props, context);
-    }
-
     static route = {
         navigationBar: {
             title: 'Insights',
             tintColor: Colors.tintColor,
-            titleStyle: {color: 'black'},
-
+            titleStyle: { color: 'black' },
         },
     };
 
@@ -36,7 +29,9 @@ class Insights extends Component {
                     </View>
                     <View style={styles.subHeader}>
                         <Text style={styles.subHeaderTitle}>Training Adherence</Text>
-                        <Text style={styles.subHeaderSubTitle}>Your training adherence was 75% last week.</Text>
+                        <Text style={styles.subHeaderSubTitle}>
+                            Your training adherence was 75% last week.
+                        </Text>
                     </View>
                     <View style={styles.spacer} />
                     <View style={styles.chartContainer}>
@@ -47,55 +42,60 @@ class Insights extends Component {
                             topValue={7}
                             topTitle='70%'
                             bottomValue={0}
-                            bottomTitle='N/A' />
+                            bottomTitle='N/A' 
+                        />
                         <ChartRow
                             day='Sat'
                             date='16/12'
                             topValue={8}
                             topTitle='80%'
                             bottomValue={0}
-                            bottomTitle='N/A' />
+                            bottomTitle='N/A' 
+                        />
                         <ChartRow
                             day='Sun'
                             date='17/12'
                             topValue={8}
                             topTitle='80%'
                             bottomValue={10}
-                            bottomTitle='100%' />
+                            bottomTitle='100%' 
+                        />
                         <ChartRow
                             day='Mon'
                             date='18/12'
                             topValue={6}
                             topTitle='60%'
                             bottomValue={8}
-                            bottomTitle='80%' />
+                            bottomTitle='80%' 
+                        />
                         <ChartRow
                             day='Tue'
                             date='19/12'
                             topValue={5}
                             topTitle='50%'
                             bottomValue={10}
-                            bottomTitle='100%' />
+                            bottomTitle='100%' 
+                        />
                         <ChartRow
                             day='Wed'
                             date='20/12'
                             topValue={5}
                             topTitle='50%'
                             bottomValue={10}
-                            bottomTitle='100%' />
+                            bottomTitle='100%' 
+                        />
                         <ChartRow
                             day='Thu'
                             date='21/12'
                             topValue={7}
                             topTitle='70%'
                             bottomValue={10}
-                            bottomTitle='100%' />
+                            bottomTitle='100%' 
+                        />
                     </View>
                 </View>
             </ScrollView>
-        )
-
-
+        );
     }
 }
 
@@ -155,6 +155,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
-})
+});
 
-export default Insights
+export default Insights;
