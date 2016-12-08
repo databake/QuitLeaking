@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
@@ -26,67 +26,9 @@ export default class TabNavigationLayout extends Component {
         }
     }
 
-    render() {
-        return (
-            <NavigationProvider router={Router}>
-                <TabNavigation
-                    id="main"
-                    navigatorUID="main"
-                    initialTab="squeeze">
-                    <TabItem
-                        id="squeeze"
-                        renderIcon={isSelected => this._renderIcon('Squeeze', 'ios-heart-outline', 'ios-heart', isSelected)}>
-                        <StackNavigation
-                            id="squeeze"
-                            navigatorUID="squeeze"
-                            initialRoute={Router.getRoute('squeeze')}
-                            />
-                    </TabItem>
-
-                    <TabItem
-                        id="leakage"
-                        renderIcon={isSelected => this._renderIcon('Leakage', 'ios-flask-outline', 'ios-flask', isSelected)}>
-                        <StackNavigation
-                            id="leakage"
-                            initialRoute={Router.getRoute('leakage')}
-                            />
-                    </TabItem>
-
-                    <TabItem
-                        id="insights"
-                        renderIcon={isSelected => this._renderIcon('Insights', 'ios-stats-outline', 'ios-stats', isSelected)}>
-                        <StackNavigation
-                            id="insights"
-                            initialRoute={Router.getRoute('insights')}
-                            />
-                    </TabItem>
-
-                    <TabItem
-                        id="program"
-                        renderIcon={isSelected => this._renderIcon('Program', 'ios-notifications-outline', 'ios-notifications', isSelected)}>
-                        <StackNavigation
-                            id="program"
-                            initialRoute={Router.getRoute('program')}
-                            />
-                    </TabItem>
-
-                    <TabItem
-                        id="profile"
-                        renderIcon={isSelected => this._renderIcon('Profile', 'ios-contact-outline', 'ios-contact', isSelected)}>
-                        <StackNavigation
-                            id="profile"
-                            initialRoute={Router.getRoute('profile')}
-                            />
-                    </TabItem>
-
-                </TabNavigation>
-            </NavigationProvider>
-        )
-    }
-
-    _renderIcon(title: string, iconName: string, selectedIconName: string, isSelected: bool): ReactElement<any> {
-        let color = isSelected ? Colors.tabIconSelected : Colors.tabIconDefault;
-        let tabIconName = isSelected ? selectedIconName : iconName ;
+    renderIcon(title: string, iconName: string, selectedIconName: string, isSelected: bool) {
+        const color = isSelected ? Colors.tabIconSelected : Colors.tabIconDefault;
+        const tabIconName = isSelected ? selectedIconName : iconName;
 
         return (
             <View style={styles.tabItemContainer}>
@@ -96,6 +38,84 @@ export default class TabNavigationLayout extends Component {
                     {title}
                 </Text>
             </View>
+        );
+    }
+
+    render() {
+        return (
+            <NavigationProvider router={Router}>
+                <TabNavigation
+                    id="main"
+                    navigatorUID="main"
+                    initialTab="squeeze"
+                >
+                    <TabItem
+                        id="squeeze"
+                        renderIcon={isSelected => this.renderIcon('Squeeze', 
+                            'ios-heart-outline', 
+                            'ios-heart', 
+                            isSelected)}
+                    >
+                        <StackNavigation
+                            id="squeeze"
+                            navigatorUID="squeeze"
+                            initialRoute={Router.getRoute('squeeze')}
+                        />
+                    </TabItem>
+
+                    <TabItem
+                        id="leakage"
+                        renderIcon={isSelected => this.renderIcon('Leakage', 
+                            'ios-flask-outline', 
+                            'ios-flask', 
+                            isSelected)}
+                    >
+                        <StackNavigation
+                            id="leakage"
+                            initialRoute={Router.getRoute('leakage')}
+                        />
+                    </TabItem>
+
+                    <TabItem
+                        id="insights"
+                        renderIcon={isSelected => this.renderIcon('Insights', 
+                            'ios-stats-outline', 
+                            'ios-stats', 
+                            isSelected)}
+                    >
+                        <StackNavigation
+                            id="insights"
+                            initialRoute={Router.getRoute('insights')}
+                        />
+                    </TabItem>
+
+                    <TabItem
+                        id="program"
+                        renderIcon={isSelected => this.renderIcon('Program', 
+                            'ios-notifications-outline', 
+                            'ios-notifications', 
+                            isSelected)}
+                    >
+                        <StackNavigation
+                            id="program"
+                            initialRoute={Router.getRoute('program')}
+                        />
+                    </TabItem>
+
+                    <TabItem
+                        id="profile"
+                        renderIcon={isSelected => this.renderIcon('Profile', 
+                            'ios-contact-outline', 
+                            'ios-contact', 
+                            isSelected)}
+                    >
+                        <StackNavigation
+                            id="profile"
+                            initialRoute={Router.getRoute('profile')}
+                        />
+                    </TabItem>
+                </TabNavigation>
+            </NavigationProvider>
         );
     }
 }
@@ -112,4 +132,4 @@ const styles = StyleSheet.create({
     tabTitleText: {
         fontSize: 11,
     },
-})
+});

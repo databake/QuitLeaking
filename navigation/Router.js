@@ -3,7 +3,7 @@
  * @flow
  */
 
-import {createRouter, } from '@exponent/ex-navigation';
+import { createRouter, } from '@exponent/ex-navigation';
 import DailySqueeze from '../scenes/DailySqueeze';
 import SqueezeNow from '../scenes/SqueezeNow';
 import Leakage from '../scenes/Leakage';
