@@ -23,9 +23,9 @@ export default class QuitLeaking extends Component {
       title: 'Squeeze',
       tintColor: Colors.tintColor,
       titleStyle: { color: 'black' },
-      renderRight: () => <TodayButton 
-          tintColor={Colors.tintColor} 
-          onButtonPress={onButtonPress}
+      renderRight: () => <TodayButton
+        tintColor={Colors.tintColor}
+        onButtonPress={onButtonPress}
       />,
     },
   };
@@ -43,7 +43,7 @@ export default class QuitLeaking extends Component {
                 title='Squeeze Completion'
                 subTitle='3rd December, 2016'
                 progress={0.33}
-                color={Colors.brandColor} 
+                color={Colors.brandColor}
               />
             </View >
             <View style={styles.careList}>
