@@ -5,6 +5,6 @@
  */
 
 import { AppRegistry } from 'react-native';
-import Layout from './navigation/DrawerNavigationLayout';
+import App from './app/App';
 
-AppRegistry.registerComponent('QuitLeaking', () => Layout);
+AppRegistry.registerComponent('QuitLeaking', () => App);

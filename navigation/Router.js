@@ -11,6 +11,8 @@ import Insights from '../scenes/Insights';
 import Program from '../scenes/Program.ios';
 import ProgramAndroid from '../scenes/Program.android';
 import Profile from '../scenes/Profile';
+import DrawerNavigationLayout from './DrawerNavigationLayout';
+import TabNavigationLayout from './TabNavigationLayout';
 
 export default createRouter(() => ({
   squeeze: () => DailySqueeze,
@@ -20,4 +22,6 @@ export default createRouter(() => ({
   program: () => Program,
   programAndroid: () => ProgramAndroid,
   profile: () => Profile,
+  drawerNavigation: () => DrawerNavigationLayout,
+  tabNavigation: () => TabNavigationLayout,
 }));

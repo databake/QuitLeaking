@@ -9,7 +9,6 @@ import {
     StackNavigation,
     DrawerNavigation,
     DrawerNavigationItem,
-    NavigationProvider,
 } from '@exponent/ex-navigation';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -21,24 +20,18 @@ import { RegularText } from '../components/StyledText';
 
 export default class TabNavigationLayout extends Component {
 
-    static route = {
-        navigationBar: {
-            visible: true,
-        }
-    }
-
     renderHeader = () => (
-            <LinearGradient 
-                style={styles.header} 
-                colors={['firebrick', 'red']} 
-                start={[0.0, 0.0]} 
-                end={[1.0, 1.0]}
-            >
-                <RegularText style={styles.regularText}>
-                    Quit Leaking
+        <LinearGradient
+            style={styles.header}
+            colors={['firebrick', 'red']}
+            start={[0.0, 0.0]}
+            end={[1.0, 1.0]}
+        >
+            <RegularText style={styles.regularText}>
+                Quit Leaking
                 </RegularText>
-            </LinearGradient>
-        );
+        </LinearGradient>
+    );
 
     renderIcon(iconName: string, isSelected: bool) {
         const color = isSelected ? Colors.drawerIconSelected : Colors.drawerIconDefault;
@@ -52,9 +45,9 @@ export default class TabNavigationLayout extends Component {
 
     renderTitle(text: string, isSelected: bool) {
         return (
-            <Text 
-                style={[styles.buttonTitleText, isSelected ? 
-                    styles.buttonTitleTextSelected : {}]} 
+            <Text
+                style={[styles.buttonTitleText, isSelected ?
+                    styles.buttonTitleTextSelected : {}]}
             >
                 {text}
             </Text>
@@ -63,82 +56,80 @@ export default class TabNavigationLayout extends Component {
 
     render() {
         return (
-            <NavigationProvider router={Router}>
-                <DrawerNavigation
-                    id="main"
-                    navigatorUID="main"
-                    drawerWidth={300}
-                    renderHeader={this.renderHeader}
-                    initialItem="squeeze"
+            <DrawerNavigation
+                id="main"
+                navigatorUID="main"
+                drawerWidth={300}
+                renderHeader={this.renderHeader}
+                initialItem="squeeze"
+            >
+                <DrawerNavigationItem
+                    id="squeeze"
+                    selectedStyle={styles.selectedItemStyle}
+                    renderTitle={isSelected => this.renderTitle('Squeeze', isSelected)}
+                    renderIcon={isSelected => this.renderIcon('md-heart', isSelected)}
                 >
-                    <DrawerNavigationItem
+                    <StackNavigation
                         id="squeeze"
-                        selectedStyle={styles.selectedItemStyle}
-                        renderTitle={isSelected => this.renderTitle('Squeeze', isSelected)}
-                        renderIcon={isSelected => this.renderIcon('md-heart', isSelected)}
-                    >
-                        <StackNavigation
-                            id="squeeze"
-                            navigatorUID="squeeze"
-                            tintColor='red'
-                            initialRoute={Router.getRoute('squeeze')}
-                        />
-                    </DrawerNavigationItem>
+                        navigatorUID="squeeze"
+                        tintColor='red'
+                        initialRoute={Router.getRoute('squeeze')}
+                    />
+                </DrawerNavigationItem>
 
-                    <DrawerNavigationItem
+                <DrawerNavigationItem
+                    id="leakage"
+                    selectedStyle={styles.selectedItemStyle}
+                    renderTitle={isSelected => this.renderTitle('Leakage', isSelected)}
+                    renderIcon={isSelected => this.renderIcon('md-flask', isSelected)}
+                >
+                    <StackNavigation
                         id="leakage"
-                        selectedStyle={styles.selectedItemStyle}
-                        renderTitle={isSelected => this.renderTitle('Leakage', isSelected)}
-                        renderIcon={isSelected => this.renderIcon('md-flask', isSelected)}
-                    >
-                        <StackNavigation
-                            id="leakage"
-                            initialRoute={Router.getRoute('leakage')}
-                        />
-                    </DrawerNavigationItem>
+                        initialRoute={Router.getRoute('leakage')}
+                    />
+                </DrawerNavigationItem>
 
-                    <DrawerNavigationItem
+                <DrawerNavigationItem
+                    id="insights"
+                    selectedStyle={styles.selectedItemStyle}
+                    renderTitle={isSelected => this.renderTitle('Insights', isSelected)}
+                    renderIcon={isSelected => this.renderIcon('md-stats', isSelected)}
+                >
+                    <StackNavigation
                         id="insights"
-                        selectedStyle={styles.selectedItemStyle}
-                        renderTitle={isSelected => this.renderTitle('Insights', isSelected)}
-                        renderIcon={isSelected => this.renderIcon('md-stats', isSelected)}
-                    >
-                        <StackNavigation
-                            id="insights"
-                            initialRoute={Router.getRoute('insights')}
-                        />
-                    </DrawerNavigationItem>
+                        initialRoute={Router.getRoute('insights')}
+                    />
+                </DrawerNavigationItem>
 
-                    <DrawerNavigationItem
+                <DrawerNavigationItem
+                    id="program"
+                    selectedStyle={styles.selectedItemStyle}
+                    renderTitle={isSelected => this.renderTitle('Program', isSelected)}
+                    renderIcon={isSelected => this.renderIcon('md-notifications', isSelected)}
+                >
+                    <StackNavigation
                         id="program"
-                        selectedStyle={styles.selectedItemStyle}
-                        renderTitle={isSelected => this.renderTitle('Program', isSelected)}
-                        renderIcon={isSelected => this.renderIcon('md-notifications', isSelected)}
-                    >
-                        <StackNavigation
-                            id="program"
-                            initialRoute={Router.getRoute('programAndroid')}
-                        />
-                    </DrawerNavigationItem>
+                        initialRoute={Router.getRoute('programAndroid')}
+                    />
+                </DrawerNavigationItem>
 
-                    <DrawerNavigationItem
+                <DrawerNavigationItem
+                    id="profile"
+                    selectedStyle={styles.selectedItemStyle}
+                    renderTitle={isSelected => this.renderTitle('Profile', isSelected)}
+                    renderIcon={isSelected => this.renderIcon('md-contact', isSelected)}
+                >
+                    <StackNavigation
                         id="profile"
-                        selectedStyle={styles.selectedItemStyle}
-                        renderTitle={isSelected => this.renderTitle('Profile', isSelected)}
-                        renderIcon={isSelected => this.renderIcon('md-contact', isSelected)}
-                    >
-                        <StackNavigation
-                            id="profile"
-                            initialRoute={Router.getRoute('profile')}
-                        />
-                    </DrawerNavigationItem>
+                        initialRoute={Router.getRoute('profile')}
+                    />
+                </DrawerNavigationItem>
 
-                </DrawerNavigation>
-            </NavigationProvider>
+            </DrawerNavigation>
         );
     }
 
-    
+
 }
 
 const styles = StyleSheet.create({
@@ -161,8 +152,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#EBEBEB',
     },
     regularText: {
-        fontSize: 18, 
-        color: '#fff', 
+        fontSize: 18,
+        color: '#fff',
         backgroundColor: 'transparent',
     },
 });
