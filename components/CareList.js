@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   View,
@@ -7,36 +7,40 @@ import CareListRow from '../components/CareListRow';
 
 export default class CareList extends Component {
 
+
     render() {
+        const sub = 
+        `(${this.props.longRepetitions} slow, ${this.props.shortRepetitions} quick squeezes)`;
+    
+        const tmp = [];
+        for (let i = 0; i < this.props.dailySessions; i++) {
+            tmp.push(i);
+        }
+
+        const rows = tmp.map((i) => (
+            <CareListRow
+                key={i}
+                title={`${i + 1} of ${this.props.dailySessions}`}
+                subTitle={sub}
+                color='royalblue'
+                slowComplete
+                quickComplete={false}
+            />
+        ));
+
         return (
             <View style={styles.container}>
-                <CareListRow 
-                    title='1 of 4' 
-                    subTitle='(10 slow, 10 quick squeezes)' 
-                    color='goldenrod' 
-                    slowComplete
-                    quickComplete
-                />
-                <CareListRow 
-                    title='2 of 4' 
-                    subTitle='(10 slow, 10 quick squeezes)' 
-                    color='mediumpurple'
-                    slowComplete
-                />
-                <CareListRow 
-                    title='3 of 4' 
-                    subTitle='(10 slow, 10 quick squeezes)' 
-                    color='mediumseagreen' 
-                />
-                <CareListRow 
-                    title='4 of 4' 
-                    subTitle='(10 slow, 10 quick squeezes)' 
-                    color='steelblue' 
-                />
+                {rows}
             </View>
         );
     }
 }
+
+CareList.propTypes = {
+    longRepetitions: PropTypes.number.isRequired,
+    shortRepetitions: PropTypes.number.isRequired,
+    dailySessions: PropTypes.number.isRequired,
+};
 
 const styles = StyleSheet.create({
     container: {

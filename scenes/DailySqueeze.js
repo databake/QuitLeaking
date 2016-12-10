@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,17 +6,21 @@ import {
   Alert,
 } from 'react-native';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import WeekSlider from '../components/WeekSlider';
 import TodaySummary from '../components/TodaySummary';
 import CareList from '../components/CareList';
 import Colors from '../constants/Colors';
 import TodayButton from '../components/TodayButton';
+import * as squeezesActions from '../app/modules/squeezes/squeeze.actions';
 
 const onButtonPress = () => {
-  Alert.alert('Today has been pressed!');
+  Alert.alert('Ho');
 };
 
-export default class QuitLeaking extends Component {
+class QuitLeaking extends Component {
 
   static route = {
     navigationBar: {
@@ -47,7 +51,11 @@ export default class QuitLeaking extends Component {
               />
             </View >
             <View style={styles.careList}>
-              <CareList />
+              <CareList 
+                longRepetitions={this.props.longRepetitions}
+                shortRepetitions={this.props.shortRepetitions}
+                dailySessions={this.props.dailySessions}
+              />
             </View>
           </View>
         </ScrollView>
@@ -71,3 +79,30 @@ const styles = StyleSheet.create({
     height: 70
   }
 });
+
+QuitLeaking.propTypes = {
+  actions: PropTypes.object.isRequired,
+  longInterval: PropTypes.number.isRequired,
+  longRepetitions: PropTypes.number.isRequired,
+  shortRepetitions: PropTypes.number.isRequired,
+  dailySessions: PropTypes.number.isRequired,
+};
+
+function mapStateToProps(state) {
+  return {
+    longInterval: state.squeezes.longInterval,
+    longRepetitions: state.squeezes.longRepetitions,
+    shortRepetitions: state.squeezes.shortRepetitions,
+    dailySessions: state.squeezes.dailySessions,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(squeezesActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuitLeaking);
+
+
