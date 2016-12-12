@@ -1,25 +1,5 @@
 import * as types from '../../constants/actionTypes';
-
-export function setLongInterval(interval) {
-    return {
-        type: types.SET_LONG_INTERVAL,
-        longInterval: interval,
-    };
-}
-
-export function setLongRepetitions(repetitions) {
-    return {
-        type: types.SET_LONG_REPETITIONS,
-        longRepetitions: repetitions,
-    };
-}
-
-export function setShortRepetitions(repetitions) {
-    return {
-        type: types.SET_SHORT_REPETITIONS,
-        shortRepetitions: repetitions,
-    };
-}
+import data from '../../data/data.json';
 
 export function setDailySessions(sessions) {
     return {
@@ -27,3 +7,7 @@ export function setDailySessions(sessions) {
         dailySessions: sessions,
     };
 }
+
+export const getThisWeeksSqueezes = () => (dispatch) => {
+    dispatch({ type: types.SQUEEZES_FETCH_SUCCESS, payload: data });
+};

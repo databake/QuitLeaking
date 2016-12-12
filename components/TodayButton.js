@@ -1,29 +1,27 @@
 import React, { Component, PropTypes } from 'react';
-    import {
-    StyleSheet,
-    View,
-    Button,
-} from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 
-class TodayButton extends Component {
+import Colors from '../constants/Colors';
+import { setDailySessions } from '../app/modules/squeezes/squeeze.actions';
 
-   static propTypes = {
-       tintColor: PropTypes.string.isRequired,
-       onButtonPress: PropTypes.func.isRequired,
-       title: PropTypes.string,
-   }
+export default class TodayButton extends Component {
 
-   static defaultProps = {
-       title: 'Today',
-   }
+    static propTypes = {
+        dailySessions: PropTypes.number.isRequired,
+    }
+
+    onButtonPress = () => this.props.dispatch(
+        setDailySessions(this.props.dailySessions + 1)
+    );
 
     render() {
+        console.log(this.props);
         return (
             <View style={styles.container}>
                 <Button
-                    color={this.props.tintColor} 
-                    title={this.props.title} 
-                    onPress={this.props.onButtonPress}
+                    color={Colors.tintColor}
+                    title='Today'
+                    onPress={this.onButtonPress}
                 />
             </View>
         );
@@ -38,4 +36,3 @@ const styles = StyleSheet.create({
     },
 });
 
-export default TodayButton;

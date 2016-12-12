@@ -23,7 +23,7 @@ export default class CareList extends Component {
                 title={`${i + 1} of ${this.props.dailySessions}`}
                 subTitle={sub}
                 color='royalblue'
-                slowComplete
+                slowComplete={false}
                 quickComplete={false}
             />
         ));

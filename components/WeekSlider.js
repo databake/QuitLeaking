@@ -11,6 +11,7 @@ export default class WeekSlider extends Component {
 
     static propTypes = {
         color: PropTypes.string,
+        data: PropTypes.array.isRequired,
     }
 
     static defaultProps = {
@@ -18,21 +19,22 @@ export default class WeekSlider extends Component {
     }
 
     render() {
+        const today = new Date();
+        const selectedIndex = today.getDay();
+        const rows = this.props.data.map((i, index) => (
+            <SmallCircleProgress
+                key={index}
+                progress={(i.long_done + i.short_done) / (i.long_goal + i.short_goal)}
+                day={i.day_text}
+                color={this.props.color}
+                highLighted={index === selectedIndex}
+            />
+        ));
+
         return (
             <ScrollView horizontal contentContainerStyle={{ flex: 1 }}>
                 <View style={styles.container}>
-                    <SmallCircleProgress progress={1} day="S" color={this.props.color} />
-                    <SmallCircleProgress progress={0.5} day="M" color={this.props.color} />
-                    <SmallCircleProgress progress={0.5} day="T" color={this.props.color} />
-                    <SmallCircleProgress progress={1} day="W" color={this.props.color} />
-                    <SmallCircleProgress progress={1} day="T" color={this.props.color} />
-                    <SmallCircleProgress 
-                        progress={0.25} 
-                        day="F" 
-                        color={this.props.color} 
-                        highLighted 
-                    />
-                    <SmallCircleProgress progress={0.5} day="S" color={this.props.color} />
+                    {rows}
                 </View>
             </ScrollView>
         );

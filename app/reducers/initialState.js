@@ -4,5 +4,7 @@ export default {
     longRepetitions: 10,
     shortRepetitions: 10,
     dailySessions: 3,
+    thisWeeksSqueezes: [],
+    selectedIndex: new Date().getDay(),
   }
 };
