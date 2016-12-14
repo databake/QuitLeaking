@@ -1,3 +1,4 @@
+// TODO: re-define the shape of the squeeze state to handle view requirements
 export default {
   squeezes: {
     longInterval: 10,

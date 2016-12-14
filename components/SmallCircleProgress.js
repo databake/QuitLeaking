@@ -25,7 +25,8 @@ class SmallCircleProgress extends Component {
                     size={32}
                     unfilledColor='#ECF0F1'
                     progress={this.props.progress}
-                    style={styles.progress} color={this.props.color}
+                    style={styles.progress} 
+                    color={this.props.color}
                 />
             </View>
         );

@@ -29,17 +29,21 @@ class QuitLeaking extends Component {
       title: 'Squeeze',
       tintColor: Colors.tintColor,
       titleStyle: { color: 'black' },
-      renderRight: () => <TodayButton />, 
+      renderRight: () => <TodayButton />,
     },
   };
 
   constructor(props) {
     super(props);
+    this.state = {
+      isLoading: true,
+    };
+
     this.selectedProgress = this.selectedProgress.bind(this);
   }
 
   componentWillMount() {
-    this.props.actions.getThisWeeksSqueezes();
+    this.props.actions.currentData();
   }
 
   selectedProgress() {
@@ -60,8 +64,8 @@ class QuitLeaking extends Component {
         <ScrollView >
           <View style={{ flex: 1 }}>
             <View style={styles.horizontalScrollView}>
-              <WeekSlider 
-                color={Colors.brandColor} 
+              <WeekSlider
+                color={Colors.brandColor}
                 data={this.props.thisWeeksData}
               />
             </View>
@@ -74,7 +78,7 @@ class QuitLeaking extends Component {
               />
             </View >
             <View style={styles.careList}>
-              <CareList 
+              <CareList
                 longRepetitions={this.props.longRepetitions}
                 shortRepetitions={this.props.shortRepetitions}
                 dailySessions={this.props.dailySessions}

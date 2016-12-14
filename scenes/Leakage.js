@@ -26,6 +26,7 @@ class Leakage extends Component {
             renderRight: () => <TodayButton 
                 tintColor={Colors.leakageTintColor} 
                 onButtonPress={onButtonPress} 
+                dailySessions={[]}
             />,
         },
     };

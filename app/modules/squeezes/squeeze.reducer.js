@@ -13,8 +13,12 @@ export default function (state = initialState.squeezes, action) {
                 ...state,
                 thisWeeksSqueezes: action.payload
             };
+        case types.SQUEEZES_FETCH_FAILURE:
+            return {
+                ...state,
+                error: action.payload
+            };
         default:
 			return state;
     }
 }
-
