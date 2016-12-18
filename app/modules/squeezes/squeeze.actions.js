@@ -1,6 +1,5 @@
-import axios from 'axios';
+
 import * as types from '../../constants/actionTypes';
-// import data from '../../data/data.json';
 
 export function setDailySessions(sessions: Number) :Object {
     return {
@@ -9,29 +8,18 @@ export function setDailySessions(sessions: Number) :Object {
     };
 }
 
-export function currentDataSuccess(res: Object) :Object {
-     return {
-        type: types.SQUEEZES_FETCH_SUCCESS,
-        payload: res.data,
-    };
-}
-
-export function currentDataFailure(error) {
+export function updateLongResults(identifier, results) {
     return {
-        type: types.SQUEEZES_FETCH_FAILURE,
-        payload: error,
+        type: types.SET_LONG_RESULTS,
+        id: identifier,
+        longDone: results
     };
 }
 
-export function currentData() :Function {
-    return function (dispatch) :Object {
-        return axios.get('https://demo1703659.mockable.io/quitleaking')
-        .then(res => {
-            dispatch(currentDataSuccess(res));
-        })
-        .catch(error => {
-            dispatch(currentDataFailure(error));
-        });  
+export function updateShortResults(identifier, results) {
+    return {
+        type: types.SET_SHORT_RESULTS,
+        id: identifier,
+        shortDone: results
     };
 }
-

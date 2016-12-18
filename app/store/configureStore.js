@@ -8,7 +8,7 @@ import rootReducer from '../reducers/rootReducer';
 
 let middleware = [thunk];
 
-if (false && __DEV__) {
+if (true && __DEV__) {
   const reduxImmutableStateInvariant = require('redux-immutable-state-invariant')();
   const createLogger = require('redux-logger');
 

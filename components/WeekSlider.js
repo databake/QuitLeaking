@@ -23,11 +23,11 @@ export default class WeekSlider extends Component {
         const selectedIndex = today.getDay();
         let rows;
         if (this.props.data) {
-            rows = this.props.data.map((i, index) => (
+            rows = this.props.data.map((dayObject, index) => (
                 <SmallCircleProgress
                     key={index}
-                    progress={(i.long_done + i.short_done) / (i.long_goal + i.short_goal)}
-                    day={i.day_text}
+                    progress={dayObject.percentage}
+                    day={dayObject.date.format('dd')}
                     color={this.props.color}
                     highLighted={index === selectedIndex}
                 />

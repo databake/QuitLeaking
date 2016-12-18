@@ -7,7 +7,7 @@ import {
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import moment from 'moment';
+// import moment from 'moment';
 
 import WeekSlider from '../components/WeekSlider';
 import TodaySummary from '../components/TodaySummary';
@@ -18,7 +18,7 @@ import * as squeezesActions from '../app/modules/squeezes/squeeze.actions';
 
 const TodayButton = connect(
   state => ({
-    dailySessions: state.squeezes.dailySessions
+    dailySessions: state.squeezes.config.dailySessions
   })
 )(_TodayButton);
 
@@ -38,27 +38,12 @@ class QuitLeaking extends Component {
     this.state = {
       isLoading: true,
     };
-
-    this.selectedProgress = this.selectedProgress.bind(this);
   }
 
-  componentWillMount() {
-    this.props.actions.currentData();
-  }
-
-  selectedProgress() {
-    //TODO: move this into redux
-    const sData = this.props.thisWeeksData[this.props.selectedIndex];
-    if (sData) {
-      const totalDone = (sData.long_done + sData.short_done);
-      const totalGoal = (sData.long_goal + sData.short_goal);
-      const progress = (totalDone / totalGoal);
-      return progress;
-    }
-    return 0;
-  }
-
+  // TODO: implement isLoading state handling and progress indication
   render() {
+    const selectedDay = this.props.thisWeeksData[this.props.selectedIndex];
+
     return (
       <View style={styles.container}>
         <ScrollView >
@@ -72,8 +57,8 @@ class QuitLeaking extends Component {
             <View style={styles.todaySummary} >
               <TodaySummary
                 title='Squeeze Completion'
-                subTitle={moment().format('LL')}
-                progress={this.selectedProgress()}
+                subTitle={selectedDay.date.format('LL')}
+                progress={selectedDay.percentage}
                 color={Colors.brandColor}
               />
             </View >
@@ -119,12 +104,12 @@ QuitLeaking.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    longInterval: state.squeezes.longInterval,
-    longRepetitions: state.squeezes.longRepetitions,
-    shortRepetitions: state.squeezes.shortRepetitions,
-    dailySessions: state.squeezes.dailySessions,
+    longInterval: state.squeezes.config.longInterval,
+    longRepetitions: state.squeezes.config.longRepetitions,
+    shortRepetitions: state.squeezes.config.shortRepetitions,
+    dailySessions: state.squeezes.config.dailySessions,
     thisWeeksData: state.squeezes.thisWeeksSqueezes,
-    selectedIndex: state.squeezes.selectedIndex,
+    selectedIndex: state.squeezes.selected.dayIndex,
   };
 }
 
