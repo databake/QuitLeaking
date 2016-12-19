@@ -14,7 +14,7 @@ describe('default state', () => {
     it('should contain a day record for today', () => {
         // given
         const dayObject = {
-            id: 0,
+            id: moment().weekday(),
             date: moment().startOf('day'),
             longGoal: 3,
             shortGoal: 3,
