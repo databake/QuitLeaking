@@ -24,29 +24,15 @@ const updateLongSqueeze = (state, action) => state.map((squeeze) => {
 });
 
 const calcPercentage = (longDone, longGoal) => {
-    const result = convertResultToNumber(longDone);
-    return (result / longGoal);
-};
-
-const convertResultToNumber = (resultArray) => {
-    let value = 0;
-    resultArray.forEach((answer) => {
-        if (answer === true) { value += 1; }
-    });
-    return value;
+    const sum = longDone.reduce((previous, number) => (previous + number), 0);
+    return (longGoal === 0) ? 0 : (sum / longGoal);
 };
 
 export default function (state = initialState.squeezes, action) {
     switch (action.type) {
         case types.SET_DAILY_SESSIONS: {
-            const configCopy = {
-                ...state.config,
-                dailySessions: action.dailySessions
-            };
-            return {
-                ...state,
-                config: configCopy
-            };
+            const configCopy = { ...state.config, dailySessions: action.dailySessions };
+            return { ...state, config: configCopy };
         }
         case types.SET_LONG_RESULTS: {
             const sq = updateLongSqueeze(state.squeezeDays, action);

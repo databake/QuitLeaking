@@ -5,6 +5,7 @@ import {
   PixelRatio,
 } from 'react-native';
 
+// TODO: Add a button and update state with true/false for the selected.
 class LargeRadioButton extends Component {
 
     render() {

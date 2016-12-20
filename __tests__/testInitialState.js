@@ -18,8 +18,8 @@ describe('default state', () => {
             date: moment().startOf('day'),
             longGoal: 3,
             shortGoal: 3,
-            longDone: [false, false, false],
-            shortDone: [false, false, false],
+            longDone: [0, 0, 0],
+            shortDone: [0, 0, 0],
             percentage: 0
         };
         // when

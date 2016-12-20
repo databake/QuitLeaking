@@ -9,7 +9,7 @@ export default class CareList extends Component {
 
 
     render() {
-        const sub = 
+        const subHeading = 
         `(${this.props.longRepetitions} slow, ${this.props.shortRepetitions} quick squeezes)`;
     
         const tmp = [];
@@ -17,14 +17,15 @@ export default class CareList extends Component {
             tmp.push(i);
         }
 
-        const rows = tmp.map((i) => (
+        // TODO: pass a function to call the reducer on state change.
+        const rows = tmp.map((index) => (
             <CareListRow
-                key={i}
-                title={`${i + 1} of ${this.props.dailySessions}`}
-                subTitle={sub}
+                key={index}
+                title={`${index + 1} of ${this.props.dailySessions}`}
+                subTitle={subHeading}
                 color='royalblue'
-                slowComplete={false}
-                quickComplete={false}
+                slowComplete={false} // TOOD: get the state.
+                quickComplete={false} // TOOD: get the state.
             />
         ));
 
