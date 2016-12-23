@@ -12,6 +12,7 @@ export default class WeekSlider extends Component {
     static propTypes = {
         color: PropTypes.string,
         data: PropTypes.array,
+        selectedIndex: PropTypes.number.isRequired
     }
 
     static defaultProps = {
@@ -19,8 +20,6 @@ export default class WeekSlider extends Component {
     }
 
     render() {
-        const today = new Date();
-        const selectedIndex = today.getDay();
         let rows;
         if (this.props.data) {
             rows = this.props.data.map((dayObject, index) => (
@@ -29,7 +28,9 @@ export default class WeekSlider extends Component {
                     progress={dayObject.percentage}
                     day={dayObject.date.format('dd')}
                     color={this.props.color}
-                    highLighted={index === selectedIndex}
+                    highLighted={index === this.props.selectedIndex}
+                    dayIndex={index}
+                    onButtonPress={this.props.onButtonPress}
                 />
             ));
         } else {
@@ -41,7 +42,8 @@ export default class WeekSlider extends Component {
                     progress={0}
                     day={dayArray[i]}
                     color={this.props.color}
-                    highLighted={i === selectedIndex}
+                    highLighted={i === this.props.selectedIndex}
+                    dayIndex={i}
                  />
             ));
         }

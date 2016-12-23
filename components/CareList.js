@@ -3,29 +3,50 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+
 import CareListRow from '../components/CareListRow';
 
 export default class CareList extends Component {
 
+    constructor(props) {
+        super(props);
+        this.onPress = this.onPress.bind(this);
+    }
 
-    render() {
-        const subHeading = 
-        `(${this.props.longRepetitions} slow, ${this.props.shortRepetitions} quick squeezes)`;
-    
-        const tmp = [];
-        for (let i = 0; i < this.props.dailySessions; i++) {
-            tmp.push(i);
-        }
+    onPress(sessionIndex, squeezeIndex, value) {
+        // console.log(`Id: ${sessionIndex} Squeeze: ${squeezeIndex} Value: ${value}`);
+        this.props.onDoneChanged(sessionIndex, squeezeIndex, value);
+    }
 
-        // TODO: pass a function to call the reducer on state change.
-        const rows = tmp.map((index) => (
+    formatTitle(index, dailySessions) {
+        return `${index + 1} of ${dailySessions}`;
+    }
+
+    formatSubTitle(slowCount, shortCount) {
+        const slow = `(${slowCount} slow, `;
+        const short = `${shortCount} quick squeezes)`;
+        return slow + short;
+    }
+
+    render() {     
+        const { 
+            dailySessions = 0, 
+            longRepetitions = 0, 
+            shortRepetitions = 0,
+            doneLong,
+            doneShort
+        } = this.props;
+
+        const rows = new Array(dailySessions).fill(0).map((value, index) => (
             <CareListRow
                 key={index}
-                title={`${index + 1} of ${this.props.dailySessions}`}
-                subTitle={subHeading}
+                title={this.formatTitle(index, dailySessions)}
+                subTitle={this.formatSubTitle(longRepetitions, shortRepetitions)}
                 color='royalblue'
-                slowComplete={false} // TOOD: get the state.
-                quickComplete={false} // TOOD: get the state.
+                slowComplete={doneLong[index]} 
+                quickComplete={doneShort[index]}
+                sessionIndex={index}
+                onPress={this.onPress}
             />
         ));
 
@@ -41,6 +62,8 @@ CareList.propTypes = {
     longRepetitions: PropTypes.number.isRequired,
     shortRepetitions: PropTypes.number.isRequired,
     dailySessions: PropTypes.number.isRequired,
+    doneLong: PropTypes.arrayOf(PropTypes.number).isRequired,
+    doneShort: PropTypes.arrayOf(PropTypes.number).isRequired
 };
 
 const styles = StyleSheet.create({

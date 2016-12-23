@@ -3,11 +3,26 @@ import {
     StyleSheet,
     Text,
     View,
+    TouchableOpacity,
 } from 'react-native';
 
 import * as Progress from 'react-native-progress';
 
 class SmallCircleProgress extends Component {
+
+    constructor(props) {
+        super(props);
+        this.onButtPress = this.onButtPress.bind(this);
+    }
+
+    onButtPress() {
+        const { highLighted, dayIndex } = this.props;
+        if (!highLighted) {
+            console.log(`New selectedIndex: ${dayIndex}`);
+            // TODO: execute props onPress
+            this.props.onButtonPress(dayIndex);
+        }
+    }
 
     render() {
         let dayStyle;
@@ -18,23 +33,28 @@ class SmallCircleProgress extends Component {
         }
 
         return (
-            <View style={styles.container}>
-                <Text style={dayStyle}>{this.props.day}</Text>
-                <Progress.Circle
-                    borderColor='white'
-                    size={32}
-                    unfilledColor='#ECF0F1'
-                    progress={this.props.progress}
-                    style={styles.progress} 
-                    color={this.props.color}
-                />
-            </View>
+            <TouchableOpacity onPress={this.onButtPress}>
+                <View style={styles.container}>
+                    <Text style={dayStyle}>{this.props.day}</Text>
+                    <Progress.Circle
+                        borderColor='white'
+                        size={32}
+                        unfilledColor='#ECF0F1'
+                        progress={this.props.progress}
+                        style={styles.progress}
+                        thickness={5}
+                        color={this.props.color}
+                    />
+                </View>
+            </TouchableOpacity>
         );
     }
 }
 
 SmallCircleProgress.propTypes = {
     progress: PropTypes.number.isRequired,
+    dayIndex: PropTypes.number.isRequired,
+    highLighted: PropTypes.bool.isRequired,
 };
 
 SmallCircleProgress.defaultProps = {

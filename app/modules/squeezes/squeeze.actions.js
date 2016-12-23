@@ -23,3 +23,10 @@ export function updateShortResults(identifier, results) {
         shortDone: results
     };
 }
+
+export function setSelectedIndex(index) {
+    return {
+        type: types.SET_SELECTED_INDEX,
+        selectedIndex: index
+    };
+}

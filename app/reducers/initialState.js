@@ -1,4 +1,10 @@
 import moment from 'moment';
+import { 
+  DEFAULT_DONE, 
+  DEFAULT_GOAL, 
+  DEFAULT_REPS, 
+  DEFAULT_INTERVAL 
+} from '../constants/constants';
 
 const today = moment().startOf('day');
 
@@ -16,10 +22,10 @@ export const dafaultSqueezeDays = () => {
     daysArray.push({
       id: index,
       date: newDate.startOf('day'),
-      longGoal: 3,
-      shortGoal: 3,
-      longDone: [0, 0, 0],
-      shortDone: [0, 0, 0],
+      longGoal: DEFAULT_GOAL,
+      shortGoal: DEFAULT_GOAL,
+      longDone: DEFAULT_DONE,
+      shortDone: DEFAULT_DONE,
       percentage: 0
     });
   }
@@ -29,19 +35,16 @@ export const dafaultSqueezeDays = () => {
 export default {
   squeezes: {
     config: {
-      longInterval: 10,
-      longRepetitions: 10,
-      shortRepetitions: 10,
-      dailySessions: 3,
+      longInterval: DEFAULT_INTERVAL,
+      longRepetitions: DEFAULT_REPS,
+      shortRepetitions: DEFAULT_REPS,
+      dailySessions: DEFAULT_GOAL,
     },
-    thisWeeksSqueezes: dafaultSqueezeDays(),
+    squeezeDays: dafaultSqueezeDays(),
     selected: {
       dayIndex: today.weekday(),
       weekIndex: today.week(),
       yearIndex: today.year(),
-    },
-    selectedIndex: today.weekday(),
-    selectedWeek: today.week(),
-    selectedYear: today.year()
+    }
   }
 };

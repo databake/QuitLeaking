@@ -3,26 +3,59 @@ import {
   StyleSheet,
   View,
   PixelRatio,
+  TouchableOpacity,
 } from 'react-native';
 
-// TODO: Add a button and update state with true/false for the selected.
+import { SQUEEZE_COMPLETE, SQUEEZE_NOT_COMPLETE } from '../app/constants/constants';
+
 class LargeRadioButton extends Component {
+
+    constructor(props) {
+        super(props);
+        this.onButtPress = this.onButtPress.bind(this);
+    }
+
+    onButtPress() {
+        this.props.onButtonPress(
+            this.props.sessionIndex, 
+            this.props.squeezeIndex, 
+            this.toggleComplete()
+        );
+    }
+
+    toggleComplete() {
+        if (this.props.complete === SQUEEZE_COMPLETE) {
+            return SQUEEZE_NOT_COMPLETE;
+        }
+        return SQUEEZE_COMPLETE;
+    }
 
     render() {
         return (
-            <View 
-                style={
-                    this.props.complete ? 
-                    [styles.complete, { backgroundColor: this.props.color }] : 
-                    [styles.inComplete, { borderColor: this.props.color }]
-                } 
-            />
+            <TouchableOpacity 
+                onPress={this.onButtPress} 
+            >
+                <View 
+                    style={
+                        this.props.complete ? 
+                        [styles.complete, { backgroundColor: this.props.color }] : 
+                        [styles.inComplete, { borderColor: this.props.color }]
+                    } 
+                />
+            </TouchableOpacity>
         );
     }
 }
 
 LargeRadioButton.propTypes = {
     color: PropTypes.string.isRequired,
+    sessionIndex: PropTypes.number.isRequired,
+    squeezeIndex: PropTypes.number.isRequired,
+    complete: PropTypes.number,
+};
+
+LargeRadioButton.defaultProps = {
+    complete: 0,
 };
 
 const styles = StyleSheet.create({

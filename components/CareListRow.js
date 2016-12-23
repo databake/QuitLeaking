@@ -11,6 +11,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { withNavigation } from '@exponent/ex-navigation';
 import LargeRadioButton from './LargeRadioButton';
 import Router from '../navigation/Router';
+import { LONG_SQUEEZE_BUTTON, SHORT_SQUEEZE_BUTTON } from '../app/constants/constants';
+
 
 @withNavigation
 export default class CareListRow extends Component {
@@ -24,10 +26,6 @@ export default class CareListRow extends Component {
     render() {
         return (
             <View style={[styles.container, { height: 100 }]}>
-                <TouchableOpacity 
-                    onPress={this.onRowPress.bind(this)} 
-                    style={styles.innerContainer}
-                >
                     <View style={styles.innerContainer}>
                         <View style={styles.title}>
                             <Text
@@ -40,22 +38,32 @@ export default class CareListRow extends Component {
                             <LargeRadioButton 
                                 complete={this.props.slowComplete} 
                                 color={this.props.color} 
+                                sessionIndex={this.props.sessionIndex}
+                                squeezeIndex={LONG_SQUEEZE_BUTTON}
+                                onButtonPress={this.props.onPress}
                             />
                             <LargeRadioButton 
                                 complete={this.props.quickComplete} 
                                 color={this.props.color} 
+                                sessionIndex={this.props.sessionIndex}
+                                squeezeIndex={SHORT_SQUEEZE_BUTTON}
+                                onButtonPress={this.props.onPress}
                             />
-                            <View style={styles.iconContainer}>
-                                <Icon 
-                                    style={styles.chevron} 
-                                    color='#C8C7CC' 
-                                    name='angle-right' 
-                                    size={22} 
-                                />
-                            </View>
+                            <TouchableOpacity 
+                                onPress={this.onRowPress} 
+                                style={styles.iconContainer}
+                            >
+                                <View style={styles.iconContainer}>
+                                    <Icon 
+                                        style={styles.chevron} 
+                                        color='#C8C7CC' 
+                                        name='angle-right' 
+                                        size={22} 
+                                    />
+                                </View>
+                            </TouchableOpacity>
                         </View>
                     </View>
-                </TouchableOpacity>
             </View>
         );
     }
@@ -64,6 +72,7 @@ export default class CareListRow extends Component {
 CareListRow.propTypes = {
     title: PropTypes.string.isRequired,
     subTitle: PropTypes.string.isRequired,
+    sessionIndex: PropTypes.number.isRequired,
 };
 
 CareListRow.defaultProps = {
