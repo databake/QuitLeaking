@@ -32,6 +32,28 @@ export const dafaultSqueezeDays = () => {
   return daysArray;
 };
 
+const defaultLeakageDays = () => {
+  const dayIndex = today.weekday();
+  let index;
+  const daysArray = [];
+  for (index = 0; index < 7; index++) {
+    let newDate;
+    if ((index - dayIndex) < 0) {
+      newDate = moment().subtract(((index - dayIndex) / -1), 'd');
+    } else {
+      newDate = moment().add(index - dayIndex, 'd');
+    }
+    daysArray.push({
+      id: index,
+      date: newDate.startOf('day'),
+      inVolume: 0,
+      outVolume: 0,
+      percentage: 0,
+    });
+  }
+  return daysArray;
+};
+
 export default {
   squeezes: {
     config: {
@@ -45,6 +67,10 @@ export default {
       dayIndex: today.weekday(),
       weekIndex: today.week(),
       yearIndex: today.year(),
-    }
+    },
+  },
+  leakage: {
+    leakageWeek: defaultLeakageDays(),
+    leakageSelectedIndex: today.weekday(),
   }
 };

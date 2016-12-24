@@ -1,20 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
     StyleSheet,
     View,
     ScrollView,
-    Alert,
 } from 'react-native';
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import WeekSlider from '../components/WeekSlider';
 import TodaySummary from '../components/TodaySummary';
 import LeakList from '../components/LeakList';
 import Colors from '../constants/Colors';
-import TodayButton from '../components/TodayButton';
+import _TodayButton from '../components/TodayButton';
 
-const onButtonPress = () => {
-  Alert.alert('Today butt has been pressed!');
-};
+import * as leakageActions from '../app/modules/leakage/leakage.actions';
+
+const TodayButton = connect(
+  state => ({
+    dailySessions: state.squeezes.config.dailySessions
+  })
+)(_TodayButton);
 
 class Leakage extends Component {
 
@@ -23,13 +29,17 @@ class Leakage extends Component {
             title: 'Leakage',
             tintColor: Colors.leakageTintColor,
             titleStyle: { color: 'black' },
-            renderRight: () => <TodayButton 
-                tintColor={Colors.leakageTintColor} 
-                onButtonPress={onButtonPress} 
-                dailySessions={[]}
-            />,
+            renderRight: () => <TodayButton />,        
         },
     };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: true,
+        };
+        // this.props.actions.leakageActions.getLeakageData();
+    }
 
     render() {
         return (
@@ -37,7 +47,12 @@ class Leakage extends Component {
                 <ScrollView>
                     <View style={{ flex: 1 }}>
                         <View style={styles.horizontalScrollView}>
-                            <WeekSlider color={Colors.leakageTintColor} />
+                            <WeekSlider 
+                                color={Colors.leakageTintColor} 
+                                data={this.props.leakageWeek}
+                                selectedIndex={this.props.leakageSelectedIndex}
+                                onButtonPress={this.onSelectedIndexChanged}
+                            />
                         </View>
                         <View style={styles.todaySummary} >
                             <TodaySummary
@@ -58,7 +73,8 @@ class Leakage extends Component {
 }
 
 Leakage.propTypes = {
-    // actions: PropTypes.object.isRequired,
+    leakageSelectedIndex: PropTypes.number.isRequired,
+    actions: PropTypes.object.isRequired,
     // posts: PropTypes.arrayOf(PropTypes.object)
 };
 
@@ -78,4 +94,20 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Leakage;
+function mapStateToProps(state) {
+    console.log(state);
+    const { leakageSelectedIndex, leakageWeek } = state.leakage;
+    return {
+        leakageSelectedIndex,
+        leakageWeek,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(leakageActions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Leakage);
+

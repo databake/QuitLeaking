@@ -140,13 +140,18 @@ QuitLeaking.propTypes = {
 };
 
 function mapStateToProps(state) {
+  const { squeezes } = state;
+  const { config } = squeezes;
+  // console.log(config);
+  const { squeezeDays, selected } = squeezes;
+  const { longInterval, longRepetitions, shortRepetitions, dailySessions } = config;
   return {
-    longInterval: state.squeezes.config.longInterval,
-    longRepetitions: state.squeezes.config.longRepetitions,
-    shortRepetitions: state.squeezes.config.shortRepetitions,
-    dailySessions: state.squeezes.config.dailySessions,
-    thisWeeksData: state.squeezes.squeezeDays,
-    selectedIndex: state.squeezes.selected.dayIndex,
+    longInterval,
+    longRepetitions,
+    shortRepetitions,
+    dailySessions,
+    thisWeeksData: squeezeDays,
+    selectedIndex: selected.dayIndex,
   };
 }
 
