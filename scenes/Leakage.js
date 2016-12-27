@@ -13,8 +13,6 @@ import TodaySummary from '../components/TodaySummary';
 import LeakList from '../components/LeakList';
 import Colors from '../constants/Colors';
 import _TodayButton from '../components/TodayButton';
-import Router from '../navigation/Router';
-
 import * as leakageActions from '../app/modules/leakage/leakage.actions';
 
 const TodayButton = connect(
@@ -39,16 +37,20 @@ class Leakage extends Component {
         this.state = {
             loading: true,
         };
-        this.onRowPress = this.onRowPress.bind(this);
+        this.onSelectedIndexChanged = this.onSelectedIndexChanged.bind(this);
     }
 
-    onRowPress() {
-        this.props.navigator.push(
-            Router.getRoute('volumeInput')
-        );
+    onSelectedIndexChanged(index) {
+        this.props.actions.setSelectedIndex(index);
+    }
+
+    currentDay() {
+        return this.props.leakageWeek[this.props.leakageSelectedIndex];
     }
 
     render() {
+        const { percentage, date } = this.currentDay();
+
         return (
             <View style={styles.container}>
                 <ScrollView>
@@ -64,14 +66,14 @@ class Leakage extends Component {
                         <View style={styles.todaySummary} >
                             <TodaySummary
                                 title='Fluid Leakage'
-                                subTitle='3rd December, 2016'
-                                progress={0.5}
+                                subTitle={date.format('LL')}
+                                progress={percentage}
                                 color={Colors.leakageTintColor} 
                             />
                         </View >
                         <View style={styles.careList}>
                             <LeakList 
-                                onPress={this.onRowPress}
+                                leakDay={this.currentDay()}
                             />
                         </View>
                     </View>

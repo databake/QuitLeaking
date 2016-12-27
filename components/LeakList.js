@@ -5,34 +5,39 @@ import React, { Component, PropTypes } from 'react';
 } from 'react-native';
 
 import LeakListRow from '../components/LeakListRow';
+import { INPUT_TYPE, OUTPUT_TYPE } from '../app/constants/constants';
 
 class LeakList extends Component {
 
-    static propTypes = {
-        onPress: PropTypes.func.isRequired,
-    }
-
     render() {
+    const { outVolume, inVolume, id } = this.props.leakDay;
+
         return (
             <View style={styles.container}>
                 <LeakListRow 
                     title='Leakage' 
                     subTitle='The volume of urine in used pads'
-                    volume={1000}
+                    volume={outVolume}
                     measure='ml' 
-                    onRowPress={this.props.onPress}
+                    type={OUTPUT_TYPE}
+                    id={id}
                 />
                 <LeakListRow 
                     title='Fluid intake' 
                     subTitle='The volume of fluid intake over 24 hours'
-                    volume={2000}
+                    volume={inVolume}
                     measure='ml' 
-                    onRowPress={this.props.onPress}
+                    type={INPUT_TYPE}
+                    id={id}
                 />
             </View>
         );
     }
 }
+
+LeakList.propTypes = {
+    leakDay: PropTypes.object.isRequired,
+};
 
 const styles = StyleSheet.create({
     container: {

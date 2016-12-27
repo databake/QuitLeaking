@@ -75,6 +75,10 @@ export default function (state = initialState.leakage, action) {
             const week = updateOutVolume(state.leakageWeek, action);
             return { ...state, leakageWeek: week };
         }
+        case types.SET_SELECTED_INDEX: {
+            const newDate = moment(state.leakageWeek[action.selectedIndex].date);
+            return { ...state, leakageSelectedIndex: newDate.weekday() };
+        }
         default: {
             return state;
         }

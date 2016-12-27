@@ -10,3 +10,7 @@ export const LONG_SQUEEZE_BUTTON = 0;
 export const SHORT_SQUEEZE_BUTTON = 1;
 export const SQUEEZE_COMPLETE = 1;
 export const SQUEEZE_NOT_COMPLETE = 0;
+
+// Leakage
+export const INPUT_TYPE = 0;
+export const OUTPUT_TYPE = 1;

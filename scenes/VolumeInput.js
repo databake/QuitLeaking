@@ -6,9 +6,11 @@ import {
     Button,
     PixelRatio,
 } from 'react-native';
-
+import { connect } from 'react-redux';
 import { NavigationStyles } from '@exponent/ex-navigation';
 import NumTextInput from 'react-native-num-textinput';
+import { INPUT_TYPE, OUTPUT_TYPE } from '../app/constants/constants';
+import { updateInVolume, updateOutVolume } from '../app/modules/leakage/leakage.actions';
 
 class VolumeInput extends Component {
 
@@ -24,7 +26,9 @@ class VolumeInput extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { text: '' };
+        this.state = { 
+            text: this.props.volume > 0 ? this.props.volume.toString() : '' 
+        };
         this.onCancel = this.onCancel.bind(this);
         this.onDone = this.onDone.bind(this);
     }
@@ -34,7 +38,41 @@ class VolumeInput extends Component {
     }
 
     onDone() {
+        //TODO: create the actions
+        switch (this.props.type) {
+            case INPUT_TYPE:
+                this.props.dispatch(
+                    updateInVolume(parseInt(this.state.text, 0), this.props.id)
+                );
+                break;
+            case OUTPUT_TYPE:
+                this.props.dispatch(
+                    updateOutVolume(parseInt(this.state.text, 0), this.props.id)
+                );
+                break;
+            default:
+                break;
+        }
         this.props.navigator.pop();
+    }
+
+    getTitle() {
+        switch (this.props.type) {
+            case INPUT_TYPE:
+                return 'What is the volume of fluid intake today?';
+            case OUTPUT_TYPE:
+                return 'What is the volume of leakage today?';
+            default:
+                return '';
+        }
+    }
+
+    isValid() {
+        let valid = parseInt(this.state.text, 0) > 100;
+        if (this.props.volume && valid) {
+            valid = this.props.volume !== parseInt(this.state.text, 0);
+        }
+        return valid;
     }
 
     render() {
@@ -44,7 +82,7 @@ class VolumeInput extends Component {
                     <Button title='Cancel' onPress={this.onCancel} />
                 </View>
                 <View style={{ flex: 1 }}>
-                    <Text style={styles.text}>What is the volume of leakage today?</Text>
+                    <Text style={styles.text}>"{this.getTitle()}"</Text>
                 </View>
                 <View style={styles.inputView}>
                     <NumTextInput
@@ -59,7 +97,7 @@ class VolumeInput extends Component {
                     <Button 
                         title='Done' 
                         onPress={this.onDone} 
-                        disabled={this.state.text.length === 0}
+                        disabled={!this.isValid()}
                     />
                 </View>
             </View>
@@ -68,8 +106,13 @@ class VolumeInput extends Component {
 }
 
 VolumeInput.propTypes = {
-    // actions: PropTypes.object.isRequired,
-    // posts: PropTypes.arrayOf(PropTypes.object)
+    type: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    volume: PropTypes.number,
+};
+
+VolumeInput.defaultProps = {
+    volume: 0,
 };
 
 const styles = StyleSheet.create({
@@ -104,4 +147,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default VolumeInput;
+export default connect()(VolumeInput);
