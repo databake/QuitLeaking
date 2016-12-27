@@ -17,6 +17,11 @@ import { LONG_SQUEEZE_BUTTON, SHORT_SQUEEZE_BUTTON } from '../app/constants/cons
 @withNavigation
 export default class CareListRow extends Component {
 
+    constructor(props) {
+        super(props);
+        this.onRowPress = this.onRowPress.bind(this);
+    }
+
     onRowPress() {
         this.props.navigator.push(
             Router.getRoute('now')

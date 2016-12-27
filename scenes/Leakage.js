@@ -13,6 +13,7 @@ import TodaySummary from '../components/TodaySummary';
 import LeakList from '../components/LeakList';
 import Colors from '../constants/Colors';
 import _TodayButton from '../components/TodayButton';
+import Router from '../navigation/Router';
 
 import * as leakageActions from '../app/modules/leakage/leakage.actions';
 
@@ -38,7 +39,13 @@ class Leakage extends Component {
         this.state = {
             loading: true,
         };
-        // this.props.actions.leakageActions.getLeakageData();
+        this.onRowPress = this.onRowPress.bind(this);
+    }
+
+    onRowPress() {
+        this.props.navigator.push(
+            Router.getRoute('volumeInput')
+        );
     }
 
     render() {
@@ -63,7 +70,9 @@ class Leakage extends Component {
                             />
                         </View >
                         <View style={styles.careList}>
-                            <LeakList />
+                            <LeakList 
+                                onPress={this.onRowPress}
+                            />
                         </View>
                     </View>
                 </ScrollView>

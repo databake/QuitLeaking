@@ -1,6 +1,5 @@
 import leakageReducer from '../app/modules/leakage/leakage.reducer';
 import * as Types from '../app/constants/actionTypes';
-// import initialState from '../app/reducers/initialState';
 
 describe('Leakage reducer', () => {
     it('should set the in volume', () => {

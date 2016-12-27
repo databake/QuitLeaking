@@ -1,11 +1,18 @@
 
 import squeezeReducer from '../app/modules/squeezes/squeeze.reducer';
 import * as Types from '../app/constants/actionTypes';
-import initialState from '../app/reducers/initialState';
-
-const { squeezeDays } = initialState.squeezes;
 
 describe('on SET_LONG_RESULTS', () => {
+    let squeezeDays = [];
+    
+    beforeEach(() => {
+        squeezeDays = squeezeReducer(undefined, 'TEST').squeezeDays;
+    });
+
+    afterEach(() => {
+        squeezeDays = undefined;
+    });
+
     it('updates the percentage done', () => {
         const action = { type: Types.SET_LONG_RESULTS, id: 1, longDone: [1, 1, 1] };
         const newState = squeezeReducer(undefined, action);

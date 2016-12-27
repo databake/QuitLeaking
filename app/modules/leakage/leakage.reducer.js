@@ -1,6 +1,36 @@
-// import moment from 'moment';
+import moment from 'moment';
 import * as types from '../../constants/actionTypes';
-import initialState from '../../reducers/initialState';
+
+const today = moment().startOf('day');
+
+const defaultLeakageDays = () => {
+  const dayIndex = today.weekday();
+  let index;
+  const daysArray = [];
+  for (index = 0; index < 7; index++) {
+    let newDate;
+    if ((index - dayIndex) < 0) {
+      newDate = moment().subtract(((index - dayIndex) / -1), 'd');
+    } else {
+      newDate = moment().add(index - dayIndex, 'd');
+    }
+    daysArray.push({
+      id: index,
+      date: newDate.startOf('day'),
+      inVolume: 0,
+      outVolume: 0,
+      percentage: 0,
+    });
+  }
+  return daysArray;
+};
+
+const initialState = {
+    leakage: {
+        leakageWeek: defaultLeakageDays(),
+        leakageSelectedIndex: today.weekday(),
+    }
+};
 
 const updateOutVolume = (state, action) => state.map((measurement) => {
     if (action.id !== measurement.id) {

@@ -11,15 +11,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 class LeakListRow extends Component {
 
-    onRowPress() {
-         
+    onPress() {
+        this.props.onRowPress(); 
     }
 
     render() {
         return (
             <View style={styles.container}>
                 <TouchableOpacity 
-                    onPress={this.onRowPress.bind(this)} 
+                    onPress={this.onPress.bind(this)} 
                     style={styles.innerContainer}
                 >
                     <View style={styles.row}>
@@ -49,6 +49,7 @@ class LeakListRow extends Component {
 LeakListRow.propTypes = {
     title: PropTypes.string.isRequired,
     subTitle: PropTypes.string.isRequired,
+    onRowPress: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

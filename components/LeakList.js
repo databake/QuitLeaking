@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
     import {
     StyleSheet,
     View,
@@ -8,6 +8,10 @@ import LeakListRow from '../components/LeakListRow';
 
 class LeakList extends Component {
 
+    static propTypes = {
+        onPress: PropTypes.func.isRequired,
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -16,12 +20,14 @@ class LeakList extends Component {
                     subTitle='The volume of urine in used pads'
                     volume={1000}
                     measure='ml' 
+                    onRowPress={this.props.onPress}
                 />
                 <LeakListRow 
                     title='Fluid intake' 
                     subTitle='The volume of fluid intake over 24 hours'
                     volume={2000}
                     measure='ml' 
+                    onRowPress={this.props.onPress}
                 />
             </View>
         );
