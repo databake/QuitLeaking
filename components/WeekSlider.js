@@ -4,6 +4,7 @@ import {
   View,
   ScrollView,
 } from 'react-native';
+import moment from 'moment';
 
 import SmallCircleProgress from '../components/SmallCircleProgress';
 
@@ -26,7 +27,7 @@ export default class WeekSlider extends Component {
                 <SmallCircleProgress
                     key={index}
                     progress={dayObject.percentage}
-                    day={dayObject.date.format('dd')}
+                    day={moment(dayObject.date).format('dd')}
                     color={this.props.color}
                     highLighted={index === this.props.selectedIndex}
                     dayIndex={index}

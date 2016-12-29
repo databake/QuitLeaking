@@ -1,8 +1,10 @@
 /* eslint-disable global-require */
 /* eslint-disable no-undef */
 /* eslint-disable no-constant-condition */
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import { persistStore, autoRehydrate } from 'redux-persist';
+import { AsyncStorage } from 'react-native';
 
 import rootReducer from '../reducers/rootReducer';
 
@@ -18,10 +20,15 @@ if (true && __DEV__) {
   middleware = [...middleware];
 }
 
-export default function configureStore(initialState) {
-  return createStore(
+export default function configureStore() {
+  const store = createStore(
     rootReducer,
-    initialState,
-    applyMiddleware(...middleware)
+    compose(
+      applyMiddleware(...middleware),
+      autoRehydrate(),
+    )
   );
+  persistStore(store, { storage: AsyncStorage });
+
+  return store;
 }

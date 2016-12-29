@@ -7,3 +7,5 @@ export const SET_SELECTED_INDEX = 'SET_SELECTED_INDEX';
 export const GET_LEAKAGE_DATA = 'GET_LEAKAGE_DATA';
 export const SET_IN_VOLUME = 'SET_IN_VOLUME';
 export const SET_OUT_VOLUME = 'SET_OUT_VOLUME';
+/* Insights */
+export const GET_LAST_WEEKS_INSIGHT = 'GET_LAST_WEEKS_INSIGHT';

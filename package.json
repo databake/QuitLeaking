@@ -24,7 +24,9 @@
     "redux": "^3.6.0",
     "redux-immutable-state-invariant": "^1.2.4",
     "redux-logger": "^2.7.4",
-    "redux-thunk": "^2.1.0"
+    "redux-persist": "^4.0.1",
+    "redux-thunk": "^2.1.0",
+    "reselect": "^2.5.4"
   },
   "jest": {
     "preset": "react-native"

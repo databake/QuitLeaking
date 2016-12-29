@@ -7,6 +7,7 @@ import {
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import WeekSlider from '../components/WeekSlider';
 import TodaySummary from '../components/TodaySummary';
@@ -91,7 +92,7 @@ class QuitLeaking extends Component {
             <View style={styles.todaySummary} >
               <TodaySummary
                 title='Squeeze Completion'
-                subTitle={selectedDay.date.format('LL')}
+                subTitle={moment(selectedDay.date).format('LL')}
                 progress={selectedDay.percentage}
                 color={Colors.brandColor}
               />

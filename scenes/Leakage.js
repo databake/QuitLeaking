@@ -7,6 +7,7 @@ import {
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import WeekSlider from '../components/WeekSlider';
 import TodaySummary from '../components/TodaySummary';
@@ -66,7 +67,7 @@ class Leakage extends Component {
                         <View style={styles.todaySummary} >
                             <TodaySummary
                                 title='Fluid Leakage'
-                                subTitle={date.format('LL')}
+                                subTitle={moment(date).format('LL')}
                                 progress={percentage}
                                 color={Colors.leakageTintColor} 
                             />
@@ -86,7 +87,6 @@ class Leakage extends Component {
 Leakage.propTypes = {
     leakageSelectedIndex: PropTypes.number.isRequired,
     actions: PropTypes.object.isRequired,
-    // posts: PropTypes.arrayOf(PropTypes.object)
 };
 
 const styles = StyleSheet.create({
