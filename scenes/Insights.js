@@ -27,7 +27,7 @@ class Insights extends Component {
 
     formatPercentage(perc) {
         if (perc && perc > 0) {
-            return `${perc * 100}%`;
+            return `${Math.round(perc * 100)}%`;
         }
         return 'N/A';
     }
@@ -40,15 +40,21 @@ class Insights extends Component {
         return moment.unix(interval).format('D/M');
     }
 
+    weekPercentage() {
+        const sum = this.props.currentWeek.reduce((previous, day) => 
+            (previous + Math.round(day.squeezePerc * 100)), 0);
+        return Math.round(sum / 8);
+    }
+
     render() {
         const rows = this.props.currentWeek.map((dayObject, index) => (
             <ChartRow
                 key={index}
                 day={this.formatDayName(dayObject.id)}
                 date={this.formatDate(dayObject.id)}
-                topValue={dayObject.squeezePerc * 10}
+                topValue={Math.round(dayObject.squeezePerc * 10)}
                 topTitle={this.formatPercentage(dayObject.squeezePerc)}
-                bottomValue={dayObject.leakagePerc * 10}
+                bottomValue={Math.round(dayObject.leakagePerc * 10)}
                 bottomTitle={this.formatPercentage(dayObject.leakagePerc)}
             />
         ));
@@ -62,7 +68,7 @@ class Insights extends Component {
                     <View style={styles.subHeader}>
                         <Text style={styles.subHeaderTitle}>Training Adherence</Text>
                         <Text style={styles.subHeaderSubTitle}>
-                            Your training adherence was 75% last week.
+                            Your training adherence was {this.weekPercentage()}% last week.
                         </Text>
                     </View>
                     <View style={styles.spacer} />

@@ -46,14 +46,14 @@ class QuitLeaking extends Component {
   onLongChanged(sessionId, buttonType, value) {
       const results = this.props.thisWeeksData[this.props.selectedIndex].longDone.slice(0);
       results[sessionId] = value;
-      this.props.actions.updateLongResults(this.props.selectedIndex, results);    
+      this.props.actions.longResultsDidUpdate(this.props.selectedIndex, results);    
   }
 
   // TODO: Move this to the reducer
   onShortChanged(sessionId, buttonType, value) {
       const results = this.props.thisWeeksData[this.props.selectedIndex].shortDone.slice(0);
       results[sessionId] = value;
-      this.props.actions.updateShortResults(this.props.selectedIndex, results);
+      this.props.actions.shortResultsDidUpdate(this.props.selectedIndex, results);
   }
 
   onDoneChanged(sessionId, buttonType, value) {

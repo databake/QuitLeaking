@@ -1,6 +1,5 @@
 import moment from 'moment';
 import * as types from '../../constants/actionTypes';
-import * as insightActions from '../insight/insight.actions';
 
 const today = moment().startOf('day');
 
@@ -38,8 +37,6 @@ const updateOutVolume = (state, action) => state.map((measurement) => {
         return measurement;
     }
     const newPercentage = percentageCalc(measurement.inVolume, action.volume);
-    dispatchUpdate(measurement.date, newPercentage);
-
     return {
         ...measurement,
         outVolume: action.volume,
@@ -47,23 +44,11 @@ const updateOutVolume = (state, action) => state.map((measurement) => {
     };
 });
 
-function dispatchUpdate(date, percentage) {
-    console.log('---in the fat dispatcher---');
-   return (dispatch, getState) => {
-       console.log('---before dispatching---', getState());
-       const action = { type: 'LEAK_PERCENT_UPDATED', id: date.unix(), percentage };
-       const newState = dispatch(action);
-       console.log('---after dispatching---', newState);
-   };
-}
-
 const updateInVolume = (state, action) => state.map((measurement) => {
     if (action.id !== measurement.id) {
         return measurement;
     }
     const newPercentage = percentageCalc(action.volume, measurement.outVolume);
-    //dispatchUpdate(measurement.date, newPercentage);
-
     return {
         ...measurement,
         inVolume: action.volume,
