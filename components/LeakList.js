@@ -10,7 +10,7 @@ import { INPUT_TYPE, OUTPUT_TYPE } from '../app/constants/constants';
 class LeakList extends Component {
 
     render() {
-    const { outVolume, inVolume, id } = this.props.leakDay;
+    const { outVolume, inVolume, id, date } = this.props.leakDay;
 
         return (
             <View style={styles.container}>
@@ -21,6 +21,7 @@ class LeakList extends Component {
                     measure='ml' 
                     type={OUTPUT_TYPE}
                     id={id}
+                    date={date}
                 />
                 <LeakListRow 
                     title='Fluid intake' 
@@ -29,6 +30,7 @@ class LeakList extends Component {
                     measure='ml' 
                     type={INPUT_TYPE}
                     id={id}
+                    date={date}
                 />
             </View>
         );

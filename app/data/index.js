@@ -1,6 +1,8 @@
 
 import moment from 'moment';
 
+const today = moment();
+
 const days = [
     { date: '2016-12-01', done: 6, goal: 6 },
     { date: '2016-12-02', done: 6, goal: 6 },

@@ -7,8 +7,13 @@ import {
     ScrollView
 } from 'react-native';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import moment from 'moment';
+
 import ChartRow from '../components/ChartRow';
 import Colors from '../constants/Colors';
+import * as insightActions from '../app/modules/insight/insight.actions';
 
 class Insights extends Component {
 
@@ -20,7 +25,34 @@ class Insights extends Component {
         },
     };
 
+    formatPercentage(perc) {
+        if (perc && perc > 0) {
+            return `${perc * 100}%`;
+        }
+        return 'N/A';
+    }
+
+    formatDayName(interval) {
+        return moment.unix(interval).format('ddd');
+    }
+
+    formatDate(interval) {
+        return moment.unix(interval).format('D/M');
+    }
+
     render() {
+        const rows = this.props.currentWeek.map((dayObject, index) => (
+            <ChartRow
+                key={index}
+                day={this.formatDayName(dayObject.id)}
+                date={this.formatDate(dayObject.id)}
+                topValue={dayObject.squeezePerc * 10}
+                topTitle={this.formatPercentage(dayObject.squeezePerc)}
+                bottomValue={dayObject.leakagePerc * 10}
+                bottomTitle={this.formatPercentage(dayObject.leakagePerc)}
+            />
+        ));
+
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.container}>
@@ -36,62 +68,7 @@ class Insights extends Component {
                     <View style={styles.spacer} />
                     <View style={styles.chartContainer}>
                         <Text style={styles.chartTitle}>Chart Title</Text>
-                        <ChartRow
-                            day='Fri'
-                            date='15/12'
-                            topValue={7}
-                            topTitle='70%'
-                            bottomValue={0}
-                            bottomTitle='N/A' 
-                        />
-                        <ChartRow
-                            day='Sat'
-                            date='16/12'
-                            topValue={8}
-                            topTitle='80%'
-                            bottomValue={0}
-                            bottomTitle='N/A' 
-                        />
-                        <ChartRow
-                            day='Sun'
-                            date='17/12'
-                            topValue={8}
-                            topTitle='80%'
-                            bottomValue={10}
-                            bottomTitle='100%' 
-                        />
-                        <ChartRow
-                            day='Mon'
-                            date='18/12'
-                            topValue={6}
-                            topTitle='60%'
-                            bottomValue={8}
-                            bottomTitle='80%' 
-                        />
-                        <ChartRow
-                            day='Tue'
-                            date='19/12'
-                            topValue={5}
-                            topTitle='50%'
-                            bottomValue={10}
-                            bottomTitle='100%' 
-                        />
-                        <ChartRow
-                            day='Wed'
-                            date='20/12'
-                            topValue={5}
-                            topTitle='50%'
-                            bottomValue={10}
-                            bottomTitle='100%' 
-                        />
-                        <ChartRow
-                            day='Thu'
-                            date='21/12'
-                            topValue={7}
-                            topTitle='70%'
-                            bottomValue={10}
-                            bottomTitle='100%' 
-                        />
+                        {rows}
                     </View>
                 </View>
             </ScrollView>
@@ -157,4 +134,19 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Insights;
+function mapStateToProps(state) {
+    const { insight } = state;
+    const { currentWeek } = insight;
+    return {
+        currentWeek,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(insightActions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Insights);
+

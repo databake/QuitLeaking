@@ -10,7 +10,10 @@ import { connect } from 'react-redux';
 import { NavigationStyles } from '@exponent/ex-navigation';
 import NumTextInput from 'react-native-num-textinput';
 import { INPUT_TYPE, OUTPUT_TYPE } from '../app/constants/constants';
-import { updateInVolume, updateOutVolume } from '../app/modules/leakage/leakage.actions';
+import { 
+    volumeOutDidUpdate,
+    volumeInDidUpdate 
+} from '../app/modules/leakage/leakage.actions';
 
 class VolumeInput extends Component {
 
@@ -38,16 +41,24 @@ class VolumeInput extends Component {
     }
 
     onDone() {
-        //TODO: create the actions
+        const { dispatch } = this.props;
         switch (this.props.type) {
             case INPUT_TYPE:
-                this.props.dispatch(
-                    updateInVolume(parseInt(this.state.text, 0), this.props.id)
+                dispatch(
+                    volumeInDidUpdate(
+                        parseInt(this.state.text, 0), 
+                        this.props.id, 
+                        this.props.date
+                    )
                 );
                 break;
             case OUTPUT_TYPE:
-                this.props.dispatch(
-                    updateOutVolume(parseInt(this.state.text, 0), this.props.id)
+                dispatch(
+                    volumeOutDidUpdate(
+                        parseInt(this.state.text, 0), 
+                        this.props.id, 
+                        this.props.date
+                    )
                 );
                 break;
             default:
@@ -109,6 +120,7 @@ VolumeInput.propTypes = {
     type: PropTypes.number.isRequired,
     id: PropTypes.number.isRequired,
     volume: PropTypes.number,
+    date: PropTypes.string.isRequired,
 };
 
 VolumeInput.defaultProps = {

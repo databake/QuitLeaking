@@ -21,6 +21,7 @@ class LeakListRow extends Component {
                 type: this.props.type,
                 id: this.props.id,
                 volume: this.props.volume,
+                date: this.props.date,
             }
         ));
     }
@@ -61,6 +62,7 @@ LeakListRow.propTypes = {
     subTitle: PropTypes.string.isRequired,
     type: PropTypes.number.isRequired,
     id: PropTypes.number.isRequired,
+    date: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({

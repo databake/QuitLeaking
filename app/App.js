@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Platform, View, AsyncStorage } from 'react-native';
+import { Platform, View, AsyncStorage, Text } from 'react-native';
 import { Provider } from 'react-redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import { NavigationProvider, StackNavigation } from '@exponent/ex-navigation';
@@ -22,6 +22,15 @@ constructor(props) {
   }
 
   render() {
+    if (!this.state.rehydrated) {
+      return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 32 }}>
+            QuitLeaking
+          </Text>
+        </View>
+      );
+    }
     return (
       <View style={{ flex: 1, backgroundColor: '#000' }}>
         <Provider store={store}>
