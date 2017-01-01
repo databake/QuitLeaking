@@ -10,10 +10,7 @@ import { connect } from 'react-redux';
 import { NavigationStyles } from '@exponent/ex-navigation';
 import NumTextInput from 'react-native-num-textinput';
 import { INPUT_TYPE, OUTPUT_TYPE } from '../app/constants/constants';
-import { 
-    volumeOutDidUpdate,
-    volumeInDidUpdate 
-} from '../app/modules/leakage/leakage.actions';
+import { volumeDidUpdate } from '../app/modules/leakage/leakage.actions';
 
 class VolumeInput extends Component {
 
@@ -42,28 +39,14 @@ class VolumeInput extends Component {
 
     onDone() {
         const { dispatch } = this.props;
-        switch (this.props.type) {
-            case INPUT_TYPE:
-                dispatch(
-                    volumeInDidUpdate(
-                        parseInt(this.state.text, 0), 
-                        this.props.id, 
-                        this.props.date
-                    )
-                );
-                break;
-            case OUTPUT_TYPE:
-                dispatch(
-                    volumeOutDidUpdate(
-                        parseInt(this.state.text, 0), 
-                        this.props.id, 
-                        this.props.date
-                    )
-                );
-                break;
-            default:
-                break;
-        }
+        dispatch(
+            volumeDidUpdate(
+                parseInt(this.state.text, 0),
+                this.props.id,
+                this.props.date,
+                this.props.type
+            )
+        );
         this.props.navigator.pop();
     }
 

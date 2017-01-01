@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
     StyleSheet,
     Text,
@@ -83,8 +83,7 @@ class Insights extends Component {
 }
 
 Insights.propTypes = {
-    // actions: PropTypes.object.isRequired,
-    // posts: PropTypes.arrayOf(PropTypes.object)
+    currentWeek: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const styles = StyleSheet.create({

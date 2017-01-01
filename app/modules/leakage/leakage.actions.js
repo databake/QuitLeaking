@@ -1,5 +1,6 @@
 import moment from 'moment';
 import * as types from '../../constants/actionTypes';
+import { INPUT_TYPE } from '../../constants/constants';
 
 const delay = (ms) => new Promise(resolve =>
     setTimeout(resolve, ms)
@@ -11,11 +12,13 @@ export function getLeakageData() {
     };
 }
 
-export function volumeInDidUpdate(volume, identifier, date) {
+export function volumeDidUpdate(volume, identifier, date, type = INPUT_TYPE) {
     return (dispatch, getState) => {
-        dispatch(
-            updateInVolume(volume, identifier, date)
-        );
+        if (type === INPUT_TYPE) {
+            dispatch(updateInVolume(volume, identifier, date));
+        } else {
+            dispatch(updateOutVolume(volume, identifier, date));
+        }
         return delay(1000).then(() => {
             const id = moment(date).startOf('day').unix();
             const { leakage } = getState();
@@ -24,23 +27,7 @@ export function volumeInDidUpdate(volume, identifier, date) {
                 { type: types.LEAK_PERCENT_UPDATED, id, percentage }
             );
         });
-    };
-}
-
-export function volumeOutDidUpdate(volume, identifier, date) {
-    return (dispatch, getState) => {
-        dispatch(
-            updateOutVolume(volume, identifier, date)
-        );
-        return delay(1000).then(() => {
-            const id = moment(date).startOf('day').unix();
-            const state = getState();
-            const percentage = state.leakage.leakageWeek[identifier].percentage;
-            dispatch(
-                { type: types.LEAK_PERCENT_UPDATED, id, percentage }
-            );
-        });
-    };
+    };    
 }
 
 export function setSelectedIndex(index) {
