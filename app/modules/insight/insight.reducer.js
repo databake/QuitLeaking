@@ -47,7 +47,6 @@ export default function (state = initialState, action) {
             return state.currentWeek;
         }
         case types.LEAK_PERCENT_UPDATED: {
-            console.log(' --- THIS IS LEAK_PERCENT_UPDATED --- ');
             const { days } = state;
             let newDays;
             if (!days || days.filter(x => x.id === action.id).length === 0) {

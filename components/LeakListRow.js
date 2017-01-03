@@ -9,6 +9,8 @@ import {
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { withNavigation } from '@exponent/ex-navigation';
+// import moment from 'moment';
+
 import Router from '../navigation/Router';
 
 @withNavigation
@@ -21,7 +23,6 @@ class LeakListRow extends Component {
                 type: this.props.type,
                 id: this.props.id,
                 volume: this.props.volume,
-                date: this.props.date,
             }
         ));
     }
@@ -62,7 +63,7 @@ LeakListRow.propTypes = {
     subTitle: PropTypes.string.isRequired,
     type: PropTypes.number.isRequired,
     id: PropTypes.number.isRequired,
-    date: PropTypes.string.isRequired,
+    // date: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({

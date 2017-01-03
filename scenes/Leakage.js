@@ -46,7 +46,9 @@ class Leakage extends Component {
     }
 
     currentDay() {
-        return this.props.leakageWeek[this.props.leakageSelectedIndex];
+        const { leakageWeek, leakageSelectedIndex } = this.props;
+        const foundDays = leakageWeek.filter((e) => e.id === leakageSelectedIndex);
+        return foundDays[0];
     }
 
     render() {

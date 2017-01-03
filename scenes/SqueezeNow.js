@@ -8,15 +8,16 @@ import {
 } from 'react-native';
 
 import { NavigationStyles } from '@exponent/ex-navigation';
+import moment from 'moment';
 import padNumber from '../components/padNumber';
 import range from '../components/range';
 import DataStore from '../components/DataStore';
 import todayAtMidnight from '../components/todayAtMidnight';
 import Colors from '../constants/Colors';
 
-const DEFAULT_WORK_DURATION = 0.16667;
-const DEFAULT_BREAK_DURATION = 0.16667;
-const ONE_SECOND = 1000;
+const DEFAULT_WORK_DURATION = 10;
+const DEFAULT_BREAK_DURATION = 10;
+const ONE_SECOND = 1;
 const SQUEEZE = '❤️';
 
 class SqueezeNow extends Component {
@@ -36,14 +37,17 @@ class SqueezeNow extends Component {
         }
     }
 
-    state = {
-        backgroundColor: new Animated.Value(0),
-        countdownState: 'idle',
-        lastTick: null,
-        endTime: null,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            backgroundColor: new Animated.Value(0),
+            countdownState: 'idle',
+            lastTick: null,
+            endTime: null,
+        };
+    }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.fetchCompletedCount();
     }
 
@@ -60,15 +64,12 @@ class SqueezeNow extends Component {
     pauseTimer() {
         this.setState({ countdownState: 'paused' }, () => {
             Animated.spring(this.state.backgroundColor, { toValue: 0.5 }).start();
-
             clearInterval(this.timer);
             this.timer = null;
         });
     }
 
     stopTimer() {
-        // const { workDuration } = this.props;
-
         this.setState({ countdownState: 'idle', lastTick: null, endTime: null }, () => {
             Animated.spring(this.state.backgroundColor, { toValue: 0 }).start();
             clearInterval(this.timer);
@@ -80,22 +81,22 @@ class SqueezeNow extends Component {
         const { workDuration } = this.props;
         clearInterval(this.timer);
 
-        const currentTime = (new Date()).getTime();
+        const currentTime = moment();
         let endTime;
 
         if (this.state.countdownState === 'paused' && this.state.lastTick && this.state.endTime) {
             const timeIdle = currentTime - this.state.lastTick;
             endTime = this.state.endTime + timeIdle;
         } else {
-            endTime = ((currentTime + workDuration) * 60) * 1000;
+            endTime = moment(currentTime).add(workDuration, 's');
         }
-
+        console.log('endtime else:', endTime);
         this.setState({ countdownState: 'active', endTime, lastTick: currentTime }, async () => {
             Animated.spring(this.state.backgroundColor, { toValue: 1 }).start();
 
             // Start ticker
             this.timer = setInterval(() => {
-                const lastTick = (new Date()).getTime();
+                const lastTick = moment();
                 if (lastTick > endTime) {
                     this.squeezeDidComplete();
                     this.startBreak();
@@ -110,16 +111,15 @@ class SqueezeNow extends Component {
         const { breakDuration } = this.props;
         clearInterval(this.timer);
 
-
-        const currentTime = (new Date()).getTime();
-        const endTime = ((currentTime + breakDuration) * 60) * 1000;
+        const currentTime = moment();
+        const endTime = moment(currentTime).add(breakDuration, 's');
 
         this.setState({ countdownState: 'break', endTime, lastTick: currentTime }, async () => {
             Animated.spring(this.state.backgroundColor, { toValue: 2 }).start();
 
             // Start ticker
             this.timer = setInterval(() => {
-                const lastTick = (new Date()).getTime();
+                const lastTick = moment();
                 if (lastTick > endTime) {
                     this.startTimer();
                 } else {
@@ -136,7 +136,7 @@ class SqueezeNow extends Component {
     }
 
     renderTimeRemaining() {
-        let { endTime, lastTick } = this.state;
+        const { endTime, lastTick } = this.state;
         let minutesRemaining;
         let secondsRemaining;
 
@@ -144,15 +144,15 @@ class SqueezeNow extends Component {
             minutesRemaining = Math.floor(((endTime - lastTick) / 1000) / 60);
             secondsRemaining = Math.round(((endTime - lastTick) / 1000) - (minutesRemaining * 60));
         } else if (this.state.countdownState === 'idle' && !endTime && !lastTick) {
-            minutesRemaining = Math.floor(this.props.workDuration);
-            secondsRemaining = Math.round((this.props.workDuration - minutesRemaining) * 60);
+            minutesRemaining = 0;
+            secondsRemaining = Math.round(this.props.workDuration);
         } else {
             console.log({ error: true, endTime, lastTick });
         }
 
         return (
             <Text style={styles.countdown}>
-                {`${padNumber(minutesRemaining, 2)}:${padNumber(secondsRemaining, 2)}`}
+                {`${padNumber(secondsRemaining, 2)}`}
             </Text>
         );
     }
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     countdown: {
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 70,
+        fontSize: 90,
     },
     buttonContainer: {
         paddingTop: 40,

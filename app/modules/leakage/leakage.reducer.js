@@ -3,7 +3,7 @@ import * as types from '../../constants/actionTypes';
 
 const today = moment().startOf('day');
 
-const defaultLeakageDays = () => {
+const leakWeek = () => {
   const dayIndex = today.weekday();
   let index;
   const daysArray = [];
@@ -15,7 +15,7 @@ const defaultLeakageDays = () => {
       newDate = moment().add(index - dayIndex, 'd');
     }
     daysArray.push({
-      id: index,
+      id: newDate.startOf('day').unix(),
       date: newDate.startOf('day'),
       inVolume: 0,
       outVolume: 0,
@@ -27,8 +27,8 @@ const defaultLeakageDays = () => {
 
 const initialState = {
     leakage: {
-        leakageWeek: defaultLeakageDays(),
-        leakageSelectedIndex: today.weekday(),
+        leakageWeek: leakWeek(),
+        leakageSelectedIndex: today.unix(),
     }
 };
 
@@ -63,7 +63,6 @@ const percentageCalc = (inVolume, outVolume) => {
     return outVolume / inVolume;
 };
 
-
 export default function (state = initialState.leakage, action) {
     switch (action.type) {
         case types.GET_LEAKAGE_DATA: {
@@ -79,7 +78,7 @@ export default function (state = initialState.leakage, action) {
         }
         case types.SET_SELECTED_INDEX: {
             const newDate = moment(state.leakageWeek[action.selectedIndex].date);
-            return { ...state, leakageSelectedIndex: newDate.weekday() };
+            return { ...state, leakageSelectedIndex: newDate.startOf('day').unix() };
         }
         default: {
             return state;

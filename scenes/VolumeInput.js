@@ -9,6 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { NavigationStyles } from '@exponent/ex-navigation';
 import NumTextInput from 'react-native-num-textinput';
+
 import { INPUT_TYPE, OUTPUT_TYPE } from '../app/constants/constants';
 import { volumeDidUpdate } from '../app/modules/leakage/leakage.actions';
 
@@ -20,7 +21,7 @@ class VolumeInput extends Component {
             title: 'Measurement',
         },
         styles: {
-            ...NavigationStyles.SlideVertical
+            ...NavigationStyles.SlideVertical,
         }
     }
 
@@ -43,7 +44,6 @@ class VolumeInput extends Component {
             volumeDidUpdate(
                 parseInt(this.state.text, 0),
                 this.props.id,
-                this.props.date,
                 this.props.type
             )
         );
@@ -103,7 +103,7 @@ VolumeInput.propTypes = {
     type: PropTypes.number.isRequired,
     id: PropTypes.number.isRequired,
     volume: PropTypes.number,
-    date: PropTypes.string.isRequired,
+    // date: PropTypes.string.isRequired,
 };
 
 VolumeInput.defaultProps = {

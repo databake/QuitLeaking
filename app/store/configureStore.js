@@ -28,7 +28,7 @@ export default function configureStore() {
       autoRehydrate(),
     )
   );
+  //TODO: add selectedIndex to blacklist (need s whole reducer for this)
   persistStore(store, { storage: AsyncStorage });
-
   return store;
 }

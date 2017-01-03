@@ -42,7 +42,7 @@ describe('default state', () => {
         // given
         const { leakageSelectedIndex } = leakReducer(undefined, 'TEST_ACTION');
         // when
-        const resultIndex = moment().weekday();
+        const resultIndex = moment().startOf('day').unix();
         // then 
         expect(leakageSelectedIndex).toEqual(resultIndex);
     });

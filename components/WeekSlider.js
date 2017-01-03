@@ -21,33 +21,17 @@ export default class WeekSlider extends Component {
     }
 
     render() {
-        let rows;
-        if (this.props.data) {
-            rows = this.props.data.map((dayObject, index) => (
-                <SmallCircleProgress
-                    key={index}
-                    progress={dayObject.percentage}
-                    day={moment(dayObject.date).format('dd')}
-                    color={this.props.color}
-                    highLighted={index === this.props.selectedIndex}
-                    dayIndex={index}
-                    onButtonPress={this.props.onButtonPress}
-                />
-            ));
-        } else {
-            const itArray = [0, 1, 2, 3, 4, 5, 6];
-            const dayArray = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-            rows = itArray.map((i) => (
-                 <SmallCircleProgress
-                    key={i}
-                    progress={0}
-                    day={dayArray[i]}
-                    color={this.props.color}
-                    highLighted={i === this.props.selectedIndex}
-                    dayIndex={i}
-                 />
-            ));
-        }
+        const rows = this.props.data.map((dayObject, index) => (
+            <SmallCircleProgress
+                key={index}
+                progress={dayObject.percentage}
+                day={moment(dayObject.date).format('dd')}
+                color={this.props.color}
+                highLighted={dayObject.id === this.props.selectedIndex}
+                dayIndex={index}
+                onButtonPress={this.props.onButtonPress}
+            />
+        ));
 
         return (
             <ScrollView horizontal contentContainerStyle={{ flex: 1 }}>

@@ -1,4 +1,3 @@
-import moment from 'moment';
 import * as types from '../../constants/actionTypes';
 import { INPUT_TYPE } from '../../constants/constants';
 
@@ -12,20 +11,23 @@ export function getLeakageData() {
     };
 }
 
-export function volumeDidUpdate(volume, identifier, date, type = INPUT_TYPE) {
+export function volumeDidUpdate(volume, id, type = INPUT_TYPE) {
     return (dispatch, getState) => {
         if (type === INPUT_TYPE) {
-            dispatch(updateInVolume(volume, identifier, date));
+            dispatch(updateInVolume(volume, id));
         } else {
-            dispatch(updateOutVolume(volume, identifier, date));
+            dispatch(updateOutVolume(volume, id));
         }
         return delay(1000).then(() => {
-            const id = moment(date).startOf('day').unix();
             const { leakage } = getState();
-            const percentage = leakage.leakageWeek[identifier].percentage;
-            dispatch(
-                { type: types.LEAK_PERCENT_UPDATED, id, percentage }
-            );
+            const { leakageWeek } = leakage;
+            const leakDay = leakageWeek.filter((e) => e.id === id)[0];
+            if (leakDay) {
+                const percentage = leakDay.percentage;
+                dispatch(
+                    { type: types.LEAK_PERCENT_UPDATED, id, percentage }
+                );
+            }
         });
     };    
 }
@@ -43,19 +45,17 @@ export function didUpdatePercentage(date, percentage) {
     };
 }
 
-function updateInVolume(volume, identifier, date) {
+function updateInVolume(volume, identifier) {
     return {
-        date,
         volume,
         id: identifier,
         type: types.SET_IN_VOLUME,
     };
 } 
 
-function updateOutVolume(volume, identifier, date) {
+function updateOutVolume(volume, identifier) {
     return {
         volume,
-        date,
         id: identifier,
         type: types.SET_OUT_VOLUME,
     };
